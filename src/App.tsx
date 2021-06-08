@@ -5,27 +5,45 @@ import SearchArea from "./components/SearchArea/SearchArea";
 
 // Styles
 
-// API
-import { getCurrentRequests } from "./API/API";
+// API Requests
+import {
+  getRateLimitRemaining,
+  searchRepo,
+  getRateLimitTotal,
+} from "./API/API";
+import Profile from "./components/Profile/Profile";
 
 // Props
 
 function App() {
   // States:
-  const [requests, setRequests] = useState<number>(0);
+  const [requestsRemaining, setRequestsRemaining] = useState<number>(0);
+  const [rateLimitTotal, setRateLimitTotal] = useState<number>(0);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
 
   useEffect(() => {
-    displayRequests();
-  });
+    // displayRequests();
+    // searchRepo()
+  }, []);
 
   const displayRequests = async () => {
-    setRequests(await getCurrentRequests());
+    setRequestsRemaining(await getRateLimitRemaining());
+    setRateLimitTotal(await getRateLimitTotal());
   };
 
+  const toggleLogged = () => {
+    setIsLogged(!isLogged);
+  };
   return (
     <div>
-      <HeaderBar  requests={requests} />
+      <HeaderBar
+        callback={toggleLogged}
+        isLogged={isLogged}
+        requestsRemaining={requestsRemaining}
+        rateLimitTotal={rateLimitTotal}
+      />
       <SearchArea />
+      <Profile />
     </div>
   );
 }

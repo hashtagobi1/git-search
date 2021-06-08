@@ -7,6 +7,7 @@ export const ButtonStyles = styled(Button)`
   background: #66c6cc;
   color: black;
   margin: 10px 10px;
+  cursor: pointer;
 
   :hover {
     background: #014e53;

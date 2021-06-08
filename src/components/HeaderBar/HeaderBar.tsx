@@ -1,25 +1,34 @@
-import React from "react";
-import axios from "axios";
-
 // Styles
-import {
-  HeaderWrapper,
-  HeadingOne,
-  HeadingThree,
-  MyButton,
-} from "./HeaderBar.styles";
+import Login from "../Buttons/Login";
+import Logout from "../Buttons/Logout";
+import { HeaderWrapper, HeadingOne, HeadingThree } from "./HeaderBar.styles";
 
 // Props
 type HeaderBarProps = {
-  requests: number;
+  requestsRemaining: number;
+  rateLimitTotal: number;
+  isLogged: boolean;
+  callback: () => void;
 };
 
-const HeaderBar = ({ requests }: HeaderBarProps) => {
+// ! we need to display new
+// !limits based on akant
+
+const HeaderBar = ({
+  requestsRemaining,
+  isLogged,
+  callback,
+  rateLimitTotal,
+}: HeaderBarProps) => {
   return (
     <HeaderWrapper>
-      <HeadingThree>Requests: {requests}/60</HeadingThree>
+      <HeadingThree>
+        API Requests Remaining: {requestsRemaining}/{rateLimitTotal}
+      </HeadingThree>
       <HeadingOne>Repo Search </HeadingOne>
-      <MyButton>Sign In</MyButton>
+      {!isLogged ? <Login /> : <Logout />}
+
+      {/* {(isLogged && <Logout   onClick={callback} />) || (!isLogged && <Login />)} */}
     </HeaderWrapper>
   );
 };
