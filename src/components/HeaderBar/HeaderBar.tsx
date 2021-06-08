@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 // Styles
 import {
@@ -8,10 +9,15 @@ import {
   MyButton,
 } from "./HeaderBar.styles";
 
-const HeaderBar = () => {
+// Props
+type HeaderBarProps = {
+  requests: number;
+};
+
+const HeaderBar = ({ requests }: HeaderBarProps) => {
   return (
     <HeaderWrapper>
-      <HeadingThree>Requests: $/60</HeadingThree>
+      <HeadingThree>Requests: {requests}/60</HeadingThree>
       <HeadingOne>Repo Search </HeadingOne>
       <MyButton>Sign In</MyButton>
     </HeaderWrapper>
