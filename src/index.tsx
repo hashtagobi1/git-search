@@ -4,10 +4,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+
 // State Management
 // import {createStore} from "redux"
 import { Provider } from "react-redux";
-// import { store } from "./state/index";
+import { store } from "./state/index";
 
 // Styles
 import { GlobalStyle } from "./App.styles";
@@ -42,9 +43,9 @@ ReactDOM.render(
     redirectUri={window.location.origin}
   >
     <GlobalStyle />
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
       <App />
-    {/* </Provider> */}
+    </Provider>
   </Auth0Provider>,
   document.getElementById("root")
 );

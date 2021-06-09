@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 // Components
 import HeaderBar from "./components/HeaderBar/HeaderBar";
 import SearchArea from "./components/SearchArea/SearchArea";
+
+// State Management
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators, State } from "./state";
 
 // Styles
 
@@ -17,6 +23,7 @@ import Profile from "./components/Profile/Profile";
 
 // Authentication
 import { useAuth0 } from "@auth0/auth0-react";
+import { MyButton } from "./components/HeaderBar/HeaderBar.styles";
 
 function App() {
   // States:
@@ -24,14 +31,20 @@ function App() {
   const [rateLimitTotal, setRateLimitTotal] = useState<number>(0);
 
   useEffect(() => {
-    displayRequests();
-    searchRepo("simple dashboard 100 coin")
+    // displayRequests();
+    // searchRepo("simple dashboard 100 coin");
   }, [
     requestsRemaining,
     setRequestsRemaining,
     rateLimitTotal,
     setRateLimitTotal,
   ]);
+  // State
+
+  const dispatch = useDispatch();
+  const RM = useSelector((state: State) => state.RM_reducer);
+
+  const { RunMiddle } = bindActionCreators(actionCreators, dispatch);
 
   const displayRequests = async () => {
     setRequestsRemaining(await getRateLimitRemaining());
@@ -42,6 +55,16 @@ function App() {
   // const { isLoading } = useAuth0();
   // if (isLoading) return <div>mans lllllll</div>;
 
+  const buttonClick = () => {
+    // console.log("ButtonClicked!");
+    // console.log(middlewareFunc);
+    RunMiddle();
+    console.log(RM);
+    // middlewareFunc()
+  };
+
+
+
   // ! to show loading states
   return (
     <div>
@@ -51,7 +74,9 @@ function App() {
         requestsRemaining={requestsRemaining}
         rateLimitTotal={rateLimitTotal}
       />
-      <SearchArea  />
+      <SearchArea />
+      <MyButton onClick={buttonClick}>Button Click!</MyButton>
+      <MyButton>{}</MyButton>
       {/* <Profile /> */}
     </div>
   );
