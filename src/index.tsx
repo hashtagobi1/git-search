@@ -4,12 +4,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+// State Management
+// import {createStore} from "redux"
+import { Provider } from "react-redux";
+// import { store } from "./state/index";
+
 // Styles
 import { GlobalStyle } from "./App.styles";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Accessing Auth0 Information
-
 
 // let domain: string;
 // let clientId: string = "clientId";
@@ -24,12 +28,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //   console.log("asdasd");
 // }
 
-// * it thinks the variable is undefined which it isn't.... 
-  // ! figure out why
-  // ! or just pass in the url lmao
+// * it thinks the variable is undefined which it isn't....
+// ! figure out why
+// ! or just pass in the url lmao
 
-const domain:string = process.env.REACT_APP_AUTH0_DOMAIN! ;
-const clientId:string = process.env.REACT_APP_AUTH0_CLIENT_ID! ;
+const domain: string = process.env.REACT_APP_AUTH0_DOMAIN!;
+const clientId: string = process.env.REACT_APP_AUTH0_CLIENT_ID!;
 
 ReactDOM.render(
   <Auth0Provider
@@ -38,7 +42,9 @@ ReactDOM.render(
     redirectUri={window.location.origin}
   >
     <GlobalStyle />
-    <App />
+    {/* <Provider store={store}> */}
+      <App />
+    {/* </Provider> */}
   </Auth0Provider>,
   document.getElementById("root")
 );
