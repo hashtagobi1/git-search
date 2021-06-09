@@ -15,35 +15,44 @@ import Profile from "./components/Profile/Profile";
 
 // Props
 
+// Authentication
+import { useAuth0 } from "@auth0/auth0-react";
+
 function App() {
   // States:
   const [requestsRemaining, setRequestsRemaining] = useState<number>(0);
   const [rateLimitTotal, setRateLimitTotal] = useState<number>(0);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
 
   useEffect(() => {
-    // displayRequests();
-    // searchRepo()
-  }, []);
+    displayRequests();
+    searchRepo("simple dashboard 100 coin")
+  }, [
+    requestsRemaining,
+    setRequestsRemaining,
+    rateLimitTotal,
+    setRateLimitTotal,
+  ]);
 
   const displayRequests = async () => {
     setRequestsRemaining(await getRateLimitRemaining());
     setRateLimitTotal(await getRateLimitTotal());
   };
 
-  const toggleLogged = () => {
-    setIsLogged(!isLogged);
-  };
+  // Auth0 Methods
+  // const { isLoading } = useAuth0();
+  // if (isLoading) return <div>mans lllllll</div>;
+
+  // ! to show loading states
   return (
     <div>
       <HeaderBar
-        callback={toggleLogged}
-        isLogged={isLogged}
+        // callback={toggleLogged}
+        // isLogged={isLogged}
         requestsRemaining={requestsRemaining}
         rateLimitTotal={rateLimitTotal}
       />
-      <SearchArea />
-      <Profile />
+      <SearchArea  />
+      {/* <Profile /> */}
     </div>
   );
 }

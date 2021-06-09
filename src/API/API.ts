@@ -9,14 +9,15 @@ const endpoint: string = "https://api.github.com";
 // ? find out how to include my Login Details within the
 
 export const getRateLimitRemaining = async () => {
-  const newEndpoint = `${endpoint}/users/defunkt`;
+  const newEndpoint = `${endpoint}/rate_limit`;
   const data: number = await await axios
-    .get(newEndpoint, {
-      headers: {
-        "The header i want is to add the user name that has been logged in with":
-          "hashtagobi1",
-      },
-    })
+    .get(newEndpoint, 
+    //   {
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "true",
+    //   },
+    // }
+    )
     .then((r) => {
       return r.headers["x-ratelimit-remaining"];
     })
@@ -27,9 +28,16 @@ export const getRateLimitRemaining = async () => {
 };
 
 export const getRateLimitTotal = async () => {
-  const newEndpoint = `${endpoint}/users/defunkt`;
+  const newEndpoint = `${endpoint}/rate_limit`;
   const data: number = await await axios
-    .get(newEndpoint)
+    .get(newEndpoint,
+      
+    //   {
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "true",
+    //   },
+    // }
+    )
     .then((r) => {
       return r.headers["x-ratelimit-limit"];
     })
@@ -41,16 +49,29 @@ export const getRateLimitTotal = async () => {
 
 // Searching Repos
 
-export const searchRepo = async () => {
-  const newEndpoint = `${endpoint}/search/code`;
-  const data = await await axios
+
+
+type SearchResponseData ={
+  incompleteResults:boolean,
+  items:{}[],
+  totalCount:number
+}
+
+const search = "https://api.github.com/search/repositories?q={simple%20dashboard%20that%20displays%20100%20coins}{&page,per_page,sort,order}"
+const gap = "%20"
+
+export const searchRepo = async (searchTerm:string) => {
+  const newEndpoint = `${endpoint}/search/repositories?q={${searchTerm}}&page,per_page,sort,order}`;
+  const data:SearchResponseData = await await axios
     .get(newEndpoint)
     .then((r) => {
-      console.log(r);
+      // console.log(r);
+      return r.data
     })
     .catch((error) => {
       console.log(error);
     });
+    return console.log(data)
 };
 
 // ! they can search languages too.. 'amazing language:go'

@@ -4,11 +4,12 @@ import styled from "styled-components";
 export const ButtonStyles = styled(Button)`
   text-align: center;
   outline: none !important;
+/* ${({background}) => background ? '#000': '#66c6cc'} */
+
   background: #66c6cc;
   color: black;
   margin: 10px 10px;
   cursor: pointer;
-
   :hover {
     background: #014e53;
 
