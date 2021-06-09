@@ -35,18 +35,19 @@ const searchRepo = async (searchTerm: string) => {
 };
 
 export const fetchRepos = () => async (dispatch: any, getState: any) => {
-  const response = await axios.get(
-    `https://api.github.com/search/repositories?q={dashboard}&page,per_page,sort,order}`
-  );
+    const response = await axios.get(
+      `https://api.github.com/search/repositories?q={dashboard}&page,per_page,sort,order}`
+    )
 
-  const data = response.data;
-  console.log(data);
-  // await searchRepo("simple dashboard 100 coins")
+     const data = response.data;
+    console.log(data)
+    // await searchRepo("simple dashboard 100 coins")
 
-  dispatch({
-    type: ActionType.FETCH_REPOS,
-    inCompleteResults: data.inCompleteResults,
-    items: data.items,
-    totalCount: data.totalCount,
-  });
-};
+    dispatch({
+      type: ActionType.FETCH_REPOS,
+      inCompleteResults: data.inCompleteResults,
+      items: data.items,
+      totalCount: data.totalCount,
+    });
+  };
+

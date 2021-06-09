@@ -4,10 +4,12 @@ interface RunMiddleAction {
   type: ActionType.RUN_MIDDLE;
 }
 
+
+
 interface FetchRepos {
   type: ActionType.FETCH_REPOS;
   inCompleteResults: boolean;
-  items: [];
+  items:[];
   totalCount: number;
 }
 
