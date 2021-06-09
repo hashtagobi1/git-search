@@ -7,7 +7,7 @@ type SearchResponseData = {
   totalCount: number;
 };
 
-const initialState: any = [{
+const initialSta te: any = [{
   inCompleteResults: false,
   items:[],
   totalCount:0,
