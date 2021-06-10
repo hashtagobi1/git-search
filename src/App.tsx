@@ -68,7 +68,6 @@ function App() {
       />
       <SearchArea />
       <MyButton onClick={buttonClick}>Button Click!</MyButton>
-      <MyButton>{}</MyButton>
       {/* <Profile /> */}
     </div>
   );

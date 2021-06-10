@@ -28,7 +28,7 @@ const searchRepo = async (searchTerm: string) => {
 // ! description
 
 export const fetchRepos =
-  () => async (dispatch: Dispatch<Action>, getState: any) => {
+  (searchTerm: string) => async (dispatch: Dispatch<Action>, getState: any) => {
     dispatch({
       type: ActionType.FETCH_REPOS_REQUEST,
       loading: true,
@@ -38,7 +38,7 @@ export const fetchRepos =
     try {
       const response = await axios.get(
         // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
-        `https://api.github.com/search/repositories?q=dashboard&page=1&per_page=10`
+        `https://api.github.com/search/repositories?q=${searchTerm}&page=1&per_page=10`
         // `https://api.github.com/search/repositories?q={dashboard}&page=1,per_page=10,sort,order}`
       );
       dispatch({
@@ -49,7 +49,17 @@ export const fetchRepos =
     } catch (error) {
       dispatch({
         type: ActionType.FETCH_REPOS_ERROR,
-        error: error,
+        errorState: true,
+        error: error
       });
     }
   };
+
+export const setInput = (userText:string) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SET_INPUT,
+      payload: userText
+    });
+  };
+};

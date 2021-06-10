@@ -5,6 +5,7 @@ import { SearchResponseData } from "../../API/API";
 const initialState: any = {
   items: [[], 0],
   loading: false,
+  errorState:false,
   error: null,
 };
 
@@ -14,6 +15,7 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
     case ActionType.FETCH_REPOS_REQUEST:
       return {
         ...state,
+        errorState: false,
         loading: true,
         error: null,
       };
@@ -22,13 +24,15 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         loading: false,
+        errorState: false,
         items: [action.payload.items, action.total_count],
       };
     case ActionType.FETCH_REPOS_ERROR:
       return {
         ...state,
         loading: false,
-        error: [],
+        errorState: true,
+        items:[[],0]
       };
     default:
       return state;

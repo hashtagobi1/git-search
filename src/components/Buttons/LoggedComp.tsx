@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { MyButton } from "../HeaderBar/HeaderBar.styles";
 
-type LoggedProps = {
-  // callback: () => Promise<void>
-  isLogged: boolean;
-  callback: () => void;
-};
-
-const LoggedComp = ({ isLogged, callback }: LoggedProps) => {
+const LoggedComp = () => {
   const {
     loginWithPopup,
     isAuthenticated,
@@ -19,14 +12,11 @@ const LoggedComp = ({ isLogged, callback }: LoggedProps) => {
   } = useAuth0();
 
   if (isLoading)
-    return (
-      // add framer motion shit
-      <MyButton background="background">Signing in...</MyButton>
-    );
+    return <MyButton background="background">Signing in...</MyButton>;
 
   return (
     <>
-      {!isAuthenticated && !isLogged ? (
+      {!isAuthenticated ? (
         <MyButton
           onClick={() => {
             loginWithPopup();
@@ -40,13 +30,12 @@ const LoggedComp = ({ isLogged, callback }: LoggedProps) => {
         isAuthenticated && (
           // isLogged &&
           <>
-
-
-            {user && (<>
-            <p>Welcome {user.nickname}</p>
-            <img alt="profile-pic" src={user.picture} height="50" />
-
-            </>)}
+            {user && (
+              <>
+                <p>Welcome {user.nickname}</p>
+                <img alt="profile-pic" src={user.picture} height="50" />
+              </>
+            )}
             <MyButton
               onClick={() => {
                 logout();
@@ -55,8 +44,6 @@ const LoggedComp = ({ isLogged, callback }: LoggedProps) => {
             >
               Log out
             </MyButton>
-
-
           </>
         )
       )}

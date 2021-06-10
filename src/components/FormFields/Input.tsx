@@ -1,32 +1,36 @@
-import React, { useState, useRef } from "react";
-import { ButtonStyles } from "../Buttons/Button.styles";
+import React, {useEffect} from "react";
 import { SearchBoxForm, SubmitButton } from "./Input.styles";
 
+// State Management
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators, State } from "../../state";
+
 const Input = () => {
-  const [input, setInput] = useState<string>("");
-  const inputRef = useRef<any>("");
+
+  const dispatch = useDispatch();
+  const { setInput,fetchRepos } = bindActionCreators(actionCreators, dispatch);
+  const text = useSelector((state: State) => state.inputReducer.input);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setInput(inputRef.current.value)
-    setInput(e.target.value);
-    // console.log(input);
+    
+    setInput(e.target.value)
+
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
-    alert(input);
-  };
+    // alert(text);
+    fetchRepos(text)
 
+    // fetchRepos(text)
+  };
   return (
     <SearchBoxForm>
-      {/* <SearchBoxForm.Label>sta!</SearchBoxForm.Label> */}
       <SearchBoxForm.Control
-        ref={inputRef}
         placeholder="search for a github repository"
         onChange={handleChange}
       />
-      {/* <input onChange={handleChange}/>  */}
       <SubmitButton type="submit" onClick={handleSubmit}>
         Search!
       </SubmitButton>
