@@ -29,22 +29,27 @@ const searchRepo = async (searchTerm: string) => {
 
 export const fetchRepos =
   () => async (dispatch: Dispatch<Action>, getState: any) => {
-    const response = await axios.get(
-      // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
-      `https://api.github.com/search/repositories?q=dashboard&page=1&per_page=10`
-      // `https://api.github.com/search/repositories?q={dashboard}&page=1,per_page=10,sort,order}`
-    );
-
-    const data = response.data;
-    console.log(data);
-    // await searchRepo("simple dashboard 100 coins")
-
     dispatch({
-      type: ActionType.FETCH_REPOS,
-      total_count: data.total_count,
-      payload: data,
-      // inCompleteResults: data.inCompleteResults,
-      // items: data.items,
-      // totalCount: data.totalCount,
+      type: ActionType.FETCH_REPOS_REQUEST,
+      loading: true,
+      payload: [],
     });
+
+    try {
+      const response = await axios.get(
+        // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
+        `https://api.github.com/search/repositories?q=dashboard&page=1&per_page=10`
+        // `https://api.github.com/search/repositories?q={dashboard}&page=1,per_page=10,sort,order}`
+      );
+      dispatch({
+        type: ActionType.FETCH_REPO_SUCCESS,
+        total_count: response.data.total_count,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionType.FETCH_REPOS_ERROR,
+        error: error,
+      });
+    }
   };

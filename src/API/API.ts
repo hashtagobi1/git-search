@@ -4,10 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 
-// const dispatch = useDispatch();
-// const FR = useSelector((state: State) => state.fetchRepoReducer);
-
-// export const { fetchRepos } = bindActionCreators(actionCreators, dispatch);
 
 const endpoint: string = "https://api.github.com";
 
@@ -62,9 +58,11 @@ export const getRateLimitTotal = async () => {
 
 export type SearchResponseData = {
   incompleteResults: boolean;
-  items: {}[];
+  items: [];
   totalCount: number;
 };
+
+
 
 const search =
   "https://api.github.com/search/repositories?q={simple%20dashboard%20that%20displays%20100%20coins}{&page,per_page,sort,order}";
