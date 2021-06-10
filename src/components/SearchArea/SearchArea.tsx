@@ -1,16 +1,13 @@
+import React, { useEffect } from "react";
 import Input from "../FormFields/Input";
-import { SearchWrapper , Paragraph} from "./SearchArea.styles";
+import { SearchWrapper, Paragraph } from "./SearchArea.styles";
 
 // State Management
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators, State } from "../../state";
+import { useSelector } from "react-redux";
+import { State } from "../../state";
+import ResultCardComponent from "../Result/ResultCardComponent";
 
 const SearchArea = () => {
-  const dispatch = useDispatch();
-
-  // !selector gets access to state
-
   const totalCount = useSelector(
     (state: State) => state.fetchRepoReducer.items[1]
   );
@@ -23,6 +20,11 @@ const SearchArea = () => {
   const errorState = useSelector(
     (state: State) => state.fetchRepoReducer.errorState
   );
+  const errorMessage = useSelector(
+    (state: State) => state.fetchRepoReducer.errorMessage
+  );
+
+  const input = useSelector((state: State) => state.inputReducer.input);
   console.log(results);
 
   const fetch = () => {
@@ -31,30 +33,21 @@ const SearchArea = () => {
     } else if (errorState) {
       return (
         <div>
-          <p>
-            Woops! Try typing something into the box... Or maybe you should try
-            logging in to increase your search limit!
-          </p>
+          <Paragraph>{errorMessage}</Paragraph>
           <h1>Display search limit here</h1>
         </div>
       );
     } else {
-      return results.map((result: any) => {
-        return (
-          <div key={result.id}>
-            <h3>RepoOwner: {result.full_name}</h3>
-            <p>Stars 🌟: {result.stargazers_count}</p>
-          </div>
-        );
-      });
+      return <ResultCardComponent />;
     }
   };
 
   return (
     <SearchWrapper>
       <Input />
-      <Paragraph>Showing {totalCount} available repository results</Paragraph>
-
+      {input && (
+        <Paragraph>Showing {totalCount} available repository results</Paragraph>
+      )}
       {fetch()}
     </SearchWrapper>
   );

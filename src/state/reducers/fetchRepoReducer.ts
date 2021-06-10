@@ -5,8 +5,11 @@ import { SearchResponseData } from "../../API/API";
 const initialState: any = {
   items: [[], 0],
   loading: false,
-  errorState:false,
+  errorState: false,
+  errorMessage: "",
   error: null,
+  rateLimit: 10,
+  rateLimitRemaining: 10,
 };
 
 const fetchRepoReducer = (state = initialState, action: Action) => {
@@ -26,13 +29,16 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
         loading: false,
         errorState: false,
         items: [action.payload.items, action.total_count],
+        rateLimit: action.rateLimit,
+        rateLimitRemaining: action.rateLimitRemaining
       };
     case ActionType.FETCH_REPOS_ERROR:
       return {
         ...state,
         loading: false,
         errorState: true,
-        items:[[],0]
+        errorMessage: action.errorMessage,
+        items: [[], 0],
       };
     default:
       return state;

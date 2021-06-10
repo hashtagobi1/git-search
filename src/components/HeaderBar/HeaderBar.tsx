@@ -3,20 +3,24 @@ import LoggedComp from "../Buttons/LoggedComp";
 // Styles
 import { HeaderWrapper, HeadingOne, HeadingThree } from "./HeaderBar.styles";
 
-// Props
-type HeaderBarProps = {
-  requestsRemaining: number;
-  rateLimitTotal: number;
-};
+// State Management
+import { useSelector } from "react-redux";
+import { State } from "../../state";
 
 // ! we need to display new
 // !limits based on akant
 
-const HeaderBar = ({ requestsRemaining, rateLimitTotal }: HeaderBarProps) => {
+const HeaderBar = () => {
+  const rateLimit = useSelector(
+    (state: State) => state.fetchRepoReducer.rateLimit
+  );
+  const rateLimitRemaining = useSelector(
+    (state: State) => state.fetchRepoReducer.rateLimitRemaining
+  );
   return (
     <HeaderWrapper>
       <HeadingThree>
-        API Requests Remaining: {requestsRemaining}/{rateLimitTotal}
+        API Requests Remaining: {rateLimitRemaining}/{rateLimit}
       </HeadingThree>
       <HeadingOne>Repo Search </HeadingOne>
       <LoggedComp />
