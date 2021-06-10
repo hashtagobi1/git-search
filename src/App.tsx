@@ -41,10 +41,6 @@ function App() {
   ]);
   // State
 
-  const dispatch = useDispatch();
-  const RM = useSelector((state: State) => state.RM_reducer);
-
-  const { RunMiddle } = bindActionCreators(actionCreators, dispatch);
 
   const displayRequests = async () => {
     setRequestsRemaining(await getRateLimitRemaining());
@@ -56,11 +52,7 @@ function App() {
   // if (isLoading) return <div>mans lllllll</div>;
 
   const buttonClick = () => {
-    // console.log("ButtonClicked!");
-    // console.log(middlewareFunc);
-    RunMiddle();
-    console.log(RM);
-    // middlewareFunc()
+    console.log("ButtonClicked!");
   };
 
 

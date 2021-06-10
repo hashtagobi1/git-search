@@ -1,16 +1,10 @@
 import { ActionType } from "../action-types";
+import { SearchResponseData } from "../../API/API";
 
-interface RunMiddleAction {
-  type: ActionType.RUN_MIDDLE;
-}
-
-
-
-interface FetchRepos {
+type FetchRepos = {
   type: ActionType.FETCH_REPOS;
-  inCompleteResults: boolean;
-  items:[];
-  totalCount: number;
-}
+  total_count: number;
+  payload: SearchResponseData;
+};
 
-export type Action = RunMiddleAction | FetchRepos;
+export type Action = FetchRepos;

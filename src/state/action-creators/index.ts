@@ -2,22 +2,9 @@ import { ActionType } from "../action-types";
 import { Dispatch } from "redux";
 import { Action } from "../actions/index";
 import axios from "axios";
+import { SearchResponseData } from "../../API/API";
 
 const endpoint: string = "https://api.github.com";
-
-export const RunMiddle = () => {
-  return (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.RUN_MIDDLE,
-    });
-  };
-};
-
-type SearchResponseData = {
-  inCompleteResults: boolean;
-  items: {}[];
-  totalCount: number;
-};
 
 // Search Repo
 const searchRepo = async (searchTerm: string) => {
@@ -34,20 +21,30 @@ const searchRepo = async (searchTerm: string) => {
   return data;
 };
 
-export const fetchRepos = () => async (dispatch: any, getState: any) => {
-    const response = await axios.get(
-      `https://api.github.com/search/repositories?q={dashboard}&page,per_page,sort,order}`
-    )
+// ! html url is repo url
+// ! stargazers_count
+// ! open_issues_count
+// ! forks_count
+// ! description
 
-     const data = response.data;
-    console.log(data)
+export const fetchRepos =
+  () => async (dispatch: Dispatch<Action>, getState: any) => {
+    const response = await axios.get(
+      // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
+      `https://api.github.com/search/repositories?q=dashboard&page=1&per_page=10`
+      // `https://api.github.com/search/repositories?q={dashboard}&page=1,per_page=10,sort,order}`
+    );
+
+    const data = response.data;
+    console.log(data);
     // await searchRepo("simple dashboard 100 coins")
 
     dispatch({
       type: ActionType.FETCH_REPOS,
-      inCompleteResults: data.inCompleteResults,
-      items: data.items,
-      totalCount: data.totalCount,
+      total_count: data.total_count,
+      payload: data,
+      // inCompleteResults: data.inCompleteResults,
+      // items: data.items,
+      // totalCount: data.totalCount,
     });
   };
-

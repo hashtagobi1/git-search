@@ -1,30 +1,15 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
+import { SearchResponseData } from "../../API/API";
 
-type SearchResponseData = {
-  inCompleteResults: boolean;
-  items: {}[];
-  totalCount: number;
-};
-
-const initialState: any = [{
-  inCompleteResults: false,
-  items:[],
-  totalCount:0,
-
-}];
+const initialState: any = [ [], 0];
 
 const fetchRepoReducer = (state = initialState, action: Action) => {
   console.log("Middleware: Fetch Repos");
   switch (action.type) {
     case ActionType.FETCH_REPOS:
-      console.log("this fetch works");
-      return [
-        ...state,
-        action.inCompleteResults,
-        action.items,
-        action.totalCount,
-      ];
+      console.log("Repos fetching...");
+      return [action.payload.items, action.total_count];
     default:
       return state;
   }

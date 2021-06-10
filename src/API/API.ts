@@ -60,7 +60,7 @@ export const getRateLimitTotal = async () => {
 
 // Searching Repos
 
-type SearchResponseData = {
+export type SearchResponseData = {
   incompleteResults: boolean;
   items: {}[];
   totalCount: number;
