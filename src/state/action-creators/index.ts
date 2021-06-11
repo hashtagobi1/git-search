@@ -87,8 +87,7 @@ export const fetchRepos =
             type: ActionType.FETCH_REPOS_ERROR,
             errorState: true,
             errorMessage:
-              "Only the first 1000 search results are available. Try something more specific" +
-              error,
+              "Only the first 1000 search results are available. Try something more specific",
             error: error.message,
           });
         }

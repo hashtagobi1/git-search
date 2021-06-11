@@ -29,6 +29,8 @@ export const InputGroupBox = styled(InputGroup)`
   margin: 10px 10px;
   /* display */
   display: flex;
+  /* text-align:start; */
+
 
   justify-content: center;
 `;

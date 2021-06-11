@@ -75,12 +75,14 @@ const Pagination = ({
       })}
       {/* Last Item */}
       <PaginationEl.Item
+        active={pageNumber === totalPages.length}
+        activeLabel=""
         onClick={() => {
           console.log(`this is page:  ${totalPages.length}`);
           fetchRepos(text, totalPages.length, perPage);
         }}
       >
-        Last Item: {totalPages.length}
+        {totalPages.length}
       </PaginationEl.Item>
     </PaginationWrapper>
   );

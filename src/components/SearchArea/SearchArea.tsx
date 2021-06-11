@@ -45,14 +45,26 @@ const SearchArea = () => {
   const displayResults = (): string => {
     let resultsLeft = 0;
     let resultsRight = 0;
+
     let hold = pageNumber - 1;
+
     resultsLeft = hold * perPage;
+
     if (hold === 0) {
       resultsLeft = 1;
-    }
+    } 
     resultsRight = perPage * pageNumber;
 
-    return `Showing results: ${resultsLeft} - ${resultsRight};`;
+    if (resultsRight > totalCount){
+      resultsRight = totalCount
+    }
+
+    if(totalCount === 0){
+      return "FRAMER MOTIONNNNNN"
+
+    }
+
+    return `Showing results: ${resultsLeft} - ${resultsRight}`;
   };
 
   const fetch = () => {

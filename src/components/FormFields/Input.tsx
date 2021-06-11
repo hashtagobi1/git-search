@@ -45,8 +45,9 @@ const Input = () => {
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
-            <DropdownEl.Toggle title="gomb" as={ButtonStyles}>
-              {/* Results per Page:{" "} */}
+            <SearchBoxForm.Label>Results Per Page:</SearchBoxForm.Label>
+            <DropdownEl.Toggle  as={ButtonStyles}>
+              Results per Page:{resultsPerPage}
             </DropdownEl.Toggle>
             <DropdownEl.Menu>
               {resultsPerPage.map((perPageAmount: number, i: number) => {
@@ -57,7 +58,7 @@ const Input = () => {
                       fetchRepos(text, pageNumber, perPageAmount);
                       // console.log(fetchRepos(text, 1, 3);)
 
-                      console.log(perPageAmount);
+                      // console.log(i);
                     }}
                   >
                     {[perPageAmount]}
