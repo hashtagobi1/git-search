@@ -17,8 +17,7 @@ Project Description
 
 ### In Progress
 
-- [ ] add first + last pagination  
-- [ ] add next + last pagination  
+- [ ] make pagination pretty!  
 
 ### Done ✓
 
@@ -30,4 +29,6 @@ Project Description
 - [x] added results section  
 - [x] add State for results per page  
 - [x] on change, dispatch per_page option  
+- [x] add next + last pagination  
+- [x] add first + last pagination  
 

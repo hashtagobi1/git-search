@@ -5,9 +5,10 @@ import HeaderBar from "./components/HeaderBar/HeaderBar";
 import SearchArea from "./components/SearchArea/SearchArea";
 
 // State Management
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators, State } from "./state";
+import { useSelector } from "react-redux";
+import { State } from "./state";
+
+
 
 // Styles
 
@@ -26,17 +27,16 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { MyButton } from "./components/HeaderBar/HeaderBar.styles";
 
 function App() {
-  // State
-
-  // Auth0 Methods
-  // const { isLoading } = useAuth0();
-  // if (isLoading) return <div>mans lllllll</div>;
+  const results = useSelector(
+    (state: State) => state.fetchRepoReducer.items[0]
+  );
 
   // ! to show loading states
   return (
     <div>
       <HeaderBar />
       <SearchArea />
+      {results.length === 0 && <h2>floating search!</h2>}
       {/* <Profile /> */}
     </div>
   );

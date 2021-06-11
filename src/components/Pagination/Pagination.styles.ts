@@ -4,9 +4,11 @@ import { Pagination } from "react-bootstrap";
 export const PaginationWrapper = styled.div`
   /* background: red; */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   list-style-type: none;
+  max-width:100vw;
+
 `;
 
 export const pagSection = styled.div`
@@ -15,9 +17,5 @@ export const pagSection = styled.div`
 `;
 
 export const PaginationEl = styled(Pagination)`
-
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   background: #66c6cc;
 `;

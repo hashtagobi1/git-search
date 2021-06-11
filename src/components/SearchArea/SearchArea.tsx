@@ -4,6 +4,7 @@ import {
   SearchWrapper,
   DarkParagraph,
   LightParagraph,
+  ResultDetails,
 } from "./SearchArea.styles";
 
 // State Management
@@ -52,16 +53,19 @@ const SearchArea = () => {
 
     if (hold === 0) {
       resultsLeft = 1;
-    } 
+    }
     resultsRight = perPage * pageNumber;
 
-    if (resultsRight > totalCount){
-      resultsRight = totalCount
+    if (resultsRight > totalCount) {
+      resultsRight = totalCount;
     }
 
-    if(totalCount === 0){
-      return "FRAMER MOTIONNNNNN"
+    if (results.length === 1) {
+      return `Showing results:  ${totalCount} of ${totalCount}`;
+    }
 
+    if (totalCount === 0) {
+      return "FRAMER MOTIONNNNNN";
     }
 
     return `Showing results: ${resultsLeft} - ${resultsRight}`;
@@ -74,28 +78,24 @@ const SearchArea = () => {
       return (
         <div>
           <DarkParagraph>{errorMessage}</DarkParagraph>
-          <h1>Display framer motion error here</h1>
+          <h1>Display framer motion error here for empty shit</h1>
         </div>
       );
     } else {
       return <ResultCardComponent />;
     }
   };
-  // ! firstNumber = pageNumber*perPage
-  // ! secondNumber =
-
   return (
     <SearchWrapper>
       <Input />
-      <p>Total Repositories = {totalCount}</p>
       {input && results && (
-        <div>
+        <ResultDetails>
           <DarkParagraph>
             Showing {totalCount} available repository results
           </DarkParagraph>
 
           <LightParagraph> {displayResults()}</LightParagraph>
-        </div>
+        </ResultDetails>
       )}
       {responseMessage && (
         <>

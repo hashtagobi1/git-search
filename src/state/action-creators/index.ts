@@ -44,6 +44,7 @@ export const fetchRepos =
       .get(newEndpoint, headerConfig)
       .then((response) => {
         const amountOfPages = Math.ceil(response.data.total_count / perPage);
+        console.log(response);
 
         if (response.data.total_count === 0) {
           return dispatch({
@@ -57,14 +58,6 @@ export const fetchRepos =
             totalPages: [...Array(amountOfPages)],
             responseMessage: "No results found for search: ",
             resultsPerPage: [10, 25, 50, 100],
-          });
-        } else if (pageNumber > amountOfPages && amountOfPages > 1) {
-          return dispatch({
-            type: ActionType.FETCH_REPOS_ERROR,
-            errorState: true,
-            errorMessage:
-              "Only the first 1000 search results are available. Try something more specific",
-            error: null,
           });
         } else if (response) {
           return dispatch({
@@ -82,6 +75,8 @@ export const fetchRepos =
         }
       })
       .catch((error) => {
+        console.log(error);
+
         if (error.message.includes("422")) {
           return dispatch({
             type: ActionType.FETCH_REPOS_ERROR,

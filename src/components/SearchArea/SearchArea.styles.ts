@@ -10,7 +10,13 @@ export const DarkParagraph = styled.p`
 
 export const LightParagraph = styled.p`
   font-weight: 300;
-  /* text-decoration: underline ; */
   text-align: center;
   background-color: hsl(0, 0, 0.93);
+`;
+
+export const ResultDetails = styled.div`
+  display: block;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
 `;

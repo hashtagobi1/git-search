@@ -39,51 +39,78 @@ const Pagination = ({
   );
   const text = useSelector((state: State) => state.inputReducer.input);
 
-  const space = <br></br>;
-  const pageClick = () => {};
+  const checkPage = () => {
+    console.log("this is the page number" + pageNumber);
+    console.log("this is the totalPages" + totalPages.length);
+    if (
+      pageNumber >= totalPages.length ||
+      (totalCount === 0 && totalResults === 0)
+    ) {
+      console.log("we made it here");
+      console.log("Total Repos = " + totalCount);
+      console.log("Total Results showing = " + totalResults);
+
+      return fetchRepos(text, 1, perPage);
+    }
+    fetchRepos(text, pageNumber + 1, perPage);
+  };
+
   return (
     <PaginationWrapper>
-      {space}{" "}
-      {/*
-      <p>PerPage = {totalResults}</p>
-      {space}
-      <p>total Pages = {totalPages.length}</p>
-      {space} */}
-      {/* <PaginationEl.First /> */}
-      {/* <PaginationEl.Prev /> */}
-      {/* ! asddasd */}
-      {totalPages.map((page: any, i: any) => {
-        if (i === 0) {
-          return;
-        } else if (totalCount > 0 || totalCount <= 1000) {
-          return (
-            <PaginationEl.Item
-              onClick={() => {
-                console.log("this is page: " + i);
-                fetchRepos(text, i, perPage);
-              }}
-              key={i}
-              active={pageNumber === i}
-              activeLabel=""
-            >
-              {i}
-            </PaginationEl.Item>
-          );
-        } else if (totalCount > 1000) {
-          return;
-        }
-      })}
-      {/* Last Item */}
-      <PaginationEl.Item
-        active={pageNumber === totalPages.length}
-        activeLabel=""
-        onClick={() => {
-          console.log(`this is page:  ${totalPages.length}`);
-          fetchRepos(text, totalPages.length, perPage);
-        }}
-      >
-        {totalPages.length}
-      </PaginationEl.Item>
+      <PaginationEl>
+        <PaginationEl.First
+          activeLabel=""
+          onClick={() => {
+            fetchRepos(text, 1, perPage);
+          }}
+        />
+        <PaginationEl.Prev
+          onClick={() => {
+            fetchRepos(text, pageNumber - 1, perPage);
+          }}
+        />
+
+        {/* Filling in the pages */}
+        {totalPages.map((page: any, arrayIndex: any) => {
+          if (arrayIndex === 0) {
+            return;
+          } else if (totalCount > 0) {
+            return (
+              <PaginationEl.Item
+                onClick={() => {
+                  fetchRepos(text, arrayIndex, perPage);
+                }}
+                key={arrayIndex}
+                active={pageNumber === arrayIndex}
+                activeLabel=""
+              >
+                {arrayIndex}
+              </PaginationEl.Item>
+            );
+          } else if (arrayIndex > totalCount) {
+            return;
+          }
+        })}
+
+        {/* Last Item */}
+        <PaginationEl.Item
+          active={pageNumber === totalPages.length}
+          activeLabel=""
+          onClick={() => {
+            fetchRepos(text, totalPages.length, perPage);
+          }}
+        >
+          {totalPages.length}
+        </PaginationEl.Item>
+
+        <PaginationEl.Next onClick={checkPage} />
+        <PaginationEl.Last
+          activeLabel=""
+          onClick={() => {
+            fetchRepos(text, totalPages.length, perPage);
+          }}
+        />
+      </PaginationEl>
     </PaginationWrapper>
   );
 };

@@ -29,7 +29,6 @@ const Input = () => {
     setInput(e.target.value);
   };
 
-
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
     e.preventDefault();
     fetchRepos(text, pageNumber, perPage);
@@ -45,8 +44,8 @@ const Input = () => {
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
-            <SearchBoxForm.Label>Results Per Page:</SearchBoxForm.Label>
-            <DropdownEl.Toggle  as={ButtonStyles}>
+            {/* <SearchBoxForm.Label >Results Per Page:</SearchBoxForm.Label> */}
+            <DropdownEl.Toggle as={ButtonStyles}>
               Results per Page:{resultsPerPage}
             </DropdownEl.Toggle>
             <DropdownEl.Menu>
