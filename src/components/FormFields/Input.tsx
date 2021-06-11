@@ -18,6 +18,12 @@ const Input = () => {
   const dispatch = useDispatch();
   const { setInput, fetchRepos } = bindActionCreators(actionCreators, dispatch);
   const text = useSelector((state: State) => state.inputReducer.input);
+  const pageNumber = useSelector(
+    (state: State) => state.fetchRepoReducer.pageNumber
+  );
+  const perPage = useSelector(
+    (state: State) => state.fetchRepoReducer.perPage
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -27,7 +33,7 @@ const Input = () => {
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // alert(text);
-    fetchRepos(text, 1, 3);
+    fetchRepos(text, pageNumber, perPage);
   };
   return (
     <SearchBoxWrapper>
@@ -61,16 +67,3 @@ const Input = () => {
 };
 
 export default Input;
-
-{
-  /* <Form.Group controlId="exampleForm.ControlSelect1">
-    <Form.Label>Example select</Form.Label>
-    <Form.Control as="select">
-      <option>4</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </Form.Control>
-  </Form.Group> */
-}

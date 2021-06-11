@@ -7,6 +7,12 @@ interface FetchRepos_SUCCESS {
   payload: SearchResponseData;
   rateLimit: number;
   rateLimitRemaining: number;
+  pageNumber: number;
+  perPage: number;
+  totalPages: number[];
+  responseMessage:string | null
+  resultsPerPage: number[]
+
 }
 
 interface FetchRepos_REQUEST {

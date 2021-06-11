@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import Input from "../FormFields/Input";
-import { SearchWrapper, Paragraph } from "./SearchArea.styles";
+import {
+  SearchWrapper,
+  DarkParagraph,
+  LightParagraph,
+} from "./SearchArea.styles";
 
 // State Management
 import { useSelector } from "react-redux";
 import { State } from "../../state";
 import ResultCardComponent from "../Result/ResultCardComponent";
-import Pagination from "../Pagination/Pagination"
+import Pagination from "../Pagination/Pagination";
 
 const SearchArea = () => {
-  const totalCount = useSelector(
+  const totalCount: number = useSelector(
     (state: State) => state.fetchRepoReducer.items[1]
   );
   const results = useSelector(
@@ -24,9 +28,32 @@ const SearchArea = () => {
   const errorMessage = useSelector(
     (state: State) => state.fetchRepoReducer.errorMessage
   );
+  const responseMessage = useSelector(
+    (state: State) => state.fetchRepoReducer.responseMessage
+  );
+  const pageNumber = useSelector(
+    (state: State) => state.fetchRepoReducer.pageNumber
+  );
+  const perPage = useSelector((state: State) => state.fetchRepoReducer.perPage);
+  const totalPages = useSelector(
+    (state: State) => state.fetchRepoReducer.totalPages
+  );
 
   const input = useSelector((state: State) => state.inputReducer.input);
   console.log(results);
+
+  const displayResults = (): string => {
+    let resultsLeft = 0;
+    let resultsRight = 0;
+    let hold = pageNumber - 1;
+    resultsLeft = hold * perPage;
+    if (hold === 0) {
+      resultsLeft = 1;
+    }
+    resultsRight = perPage * pageNumber;
+
+    return `Showing results: ${resultsLeft} - ${resultsRight};`;
+  };
 
   const fetch = () => {
     if (loadingState === true) {
@@ -34,26 +61,44 @@ const SearchArea = () => {
     } else if (errorState) {
       return (
         <div>
-          <Paragraph>{errorMessage}</Paragraph>
-          <h1>Display search limit here</h1>
+          <DarkParagraph>{errorMessage}</DarkParagraph>
+          <h1>Display framer motion error here</h1>
         </div>
       );
     } else {
       return <ResultCardComponent />;
     }
   };
+  // ! firstNumber = pageNumber*perPage
+  // ! secondNumber =
 
   return (
     <SearchWrapper>
-      {results.length > 0 && <Pagination />}
-
       <Input />
-      {input && (
-        <Paragraph>Showing {totalCount} available repository results</Paragraph>
+      <p>Total Repositories = {totalCount}</p>
+      {input && results && (
+        <div>
+          <DarkParagraph>
+            Showing {totalCount} available repository results
+          </DarkParagraph>
+
+          <LightParagraph> {displayResults()}</LightParagraph>
+        </div>
+      )}
+      {responseMessage && (
+        <>
+          <DarkParagraph>{responseMessage}</DarkParagraph>
+          <LightParagraph>"{input}"</LightParagraph>
+        </>
+      )}
+      {results.length > 0 && (
+        <Pagination
+          totalCount={totalCount}
+          totalResults={results.length}
+          resultsArray={results}
+        />
       )}
       {fetch()}
-      {/* <Pagination /> */}
-
     </SearchWrapper>
   );
 };

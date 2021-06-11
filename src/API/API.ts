@@ -4,8 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 
-
 export const endpoint: string = "https://api.github.com";
+
+export const headerConfig = {
+  headers: {
+    "Content-Type": "application/vnd.github.v3+json",
+  },
+};
 
 // Props
 
@@ -63,8 +68,6 @@ export type SearchResponseData = {
   items: [];
   totalCount: number;
 };
-
-
 
 const search =
   "https://api.github.com/search/repositories?q={simple%20dashboard%20that%20displays%20100%20coins}{&page,per_page,sort,order}";

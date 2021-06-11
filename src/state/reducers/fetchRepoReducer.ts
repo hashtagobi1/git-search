@@ -10,6 +10,11 @@ const initialState: any = {
   error: null,
   rateLimit: 10,
   rateLimitRemaining: 10,
+  pageNumber: 1,
+  perPage: 3,
+  totalPages: [],
+  responseMessage: null,
+  resultsPerPage: [10, 25, 50, 100],
 };
 
 const fetchRepoReducer = (state = initialState, action: Action) => {
@@ -30,7 +35,12 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
         errorState: false,
         items: [action.payload.items, action.total_count],
         rateLimit: action.rateLimit,
-        rateLimitRemaining: action.rateLimitRemaining
+        rateLimitRemaining: action.rateLimitRemaining,
+        pageNumber: action.pageNumber,
+        perPage: action.perPage,
+        totalPages: action.totalPages,
+        responseMessage: action.responseMessage,
+        resultsPerPage: action.resultsPerPage,
       };
     case ActionType.FETCH_REPOS_ERROR:
       return {

@@ -3,28 +3,7 @@ import { Dispatch } from "redux";
 import { Action } from "../actions/index";
 import axios from "axios";
 import { SearchResponseData } from "../../API/API";
-import { endpoint } from "../../API/API";
-
-// Search Repo
-const searchRepo = async (searchTerm: string) => {
-  const newEndpoint = `${endpoint}/search/repositories?q={${searchTerm}}&page,per_page,sort,order}`;
-  const data: SearchResponseData = await await axios
-    .get(newEndpoint)
-    .then((r) => {
-      // console.log(r);
-      return r.data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  return data;
-};
-
-// ! html url is repo url
-// ! stargazers_count
-// ! open_issues_count
-// ! forks_count
-// ! description
+import { endpoint, headerConfig } from "../../API/API";
 
 // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
 
@@ -35,25 +14,26 @@ const searchRepo = async (searchTerm: string) => {
 interface fetchReposProps {
   searchTerm: string;
   pageNumber: number;
-  perPage:number
-  sort?:string
-  order?:string
+  perPage: number;
+  sort?: string;
+  order?: string;
 }
 
 export const fetchRepos =
-  (searchTerm: string, pageNumber:number, perPage:number) => async (dispatch: Dispatch<Action>, getState: any) => {
+  (searchTerm: string, pageNumber: number, perPage: number) =>
+  async (dispatch: Dispatch<Action>, getState: any) => {
+    // const availablePages
     const newEndpoint = `${endpoint}/search/repositories?q=${searchTerm}&page=${pageNumber}&per_page=${perPage}&sort=stars`;
-
     if (!searchTerm) {
-      console.log(searchTerm);
       return dispatch({
         type: ActionType.FETCH_REPOS_ERROR,
         errorState: true,
-        errorMessage: "Search box cannot be empty, try: 'cool repository'",
+        errorMessage: "Search box cannot be empty, try: 'cool repository' ",
         error: null,
       });
     }
 
+    // Dispatch First Request
     dispatch({
       type: ActionType.FETCH_REPOS_REQUEST,
       loading: true,
@@ -61,26 +41,65 @@ export const fetchRepos =
     });
 
     await axios
-      .get(newEndpoint)
+      .get(newEndpoint, headerConfig)
       .then((response) => {
-        console.log(response);
-        dispatch({
-          type: ActionType.FETCH_REPO_SUCCESS,
-          total_count: response.data.total_count,
-          payload: response.data,
-          rateLimit: response.headers["x-ratelimit-limit"],
-          rateLimitRemaining: response.headers["x-ratelimit-remaining"],
-        });
+        const amountOfPages = Math.ceil(response.data.total_count / perPage);
+
+        if (response.data.total_count === 0) {
+          return dispatch({
+            type: ActionType.FETCH_REPO_SUCCESS,
+            total_count: response.data.total_count,
+            payload: response.data,
+            rateLimit: response.headers["x-ratelimit-limit"],
+            rateLimitRemaining: response.headers["x-ratelimit-remaining"],
+            pageNumber: pageNumber,
+            perPage: perPage,
+            totalPages: [...Array(amountOfPages)],
+            responseMessage: "No results found for search: ",
+            resultsPerPage: [10, 25, 50, 100],
+          });
+        } else if (pageNumber > amountOfPages && amountOfPages > 1) {
+          return dispatch({
+            type: ActionType.FETCH_REPOS_ERROR,
+            errorState: true,
+            errorMessage:
+              "Only the first 1000 search results are available. Try something more specific",
+            error: null,
+          });
+        } else if (response) {
+          return dispatch({
+            type: ActionType.FETCH_REPO_SUCCESS,
+            total_count: response.data.total_count,
+            payload: response.data,
+            rateLimit: response.headers["x-ratelimit-limit"],
+            rateLimitRemaining: response.headers["x-ratelimit-remaining"],
+            pageNumber: pageNumber,
+            perPage: perPage,
+            totalPages: [...Array(amountOfPages)],
+            responseMessage: null,
+            resultsPerPage: [10, 25, 50, 100],
+          });
+        }
       })
       .catch((error) => {
-        console.log(error);
-        dispatch({
-          type: ActionType.FETCH_REPOS_ERROR,
-          errorState: true,
-          errorMessage:
-            "Rate Limit Reached. Please wait 60 seconds before trying again",
-          error: error,
-        });
+        if (error.message.includes("422")) {
+          return dispatch({
+            type: ActionType.FETCH_REPOS_ERROR,
+            errorState: true,
+            errorMessage:
+              "Only the first 1000 search results are available. Try something more specific" +
+              error,
+            error: error.message,
+          });
+        }
+        if (error.message.includes("403")) {
+          dispatch({
+            type: ActionType.FETCH_REPOS_ERROR,
+            errorState: true,
+            errorMessage: `Your API rate limit has probably exceeded. Either wait 60 secs or sign in to increase search limit.`,
+            error: error.message,
+          });
+        }
       });
   };
 
