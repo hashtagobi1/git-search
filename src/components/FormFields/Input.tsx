@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
-import { SearchBoxForm, SubmitButton, selectorInput } from "./Input.styles";
+import {
+  SearchBoxForm,
+  SubmitButton,
+  InputGroupBox,
+  DropdownEl,
+  Inputs,
+  SearchBoxWrapper,
+} from "./Input.styles";
 
 // State Management
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
+import { ButtonStyles } from "../Buttons/Button.styles";
 
 const Input = () => {
-
-
   const dispatch = useDispatch();
   const { setInput, fetchRepos } = bindActionCreators(actionCreators, dispatch);
   const text = useSelector((state: State) => state.inputReducer.input);
@@ -24,28 +30,33 @@ const Input = () => {
     fetchRepos(text, 1, 3);
   };
   return (
-    <SearchBoxForm>
-      <SearchBoxForm.Group>
-        <SearchBoxForm.Control
-          placeholder="search for a github repository"
-          onChange={handleChange}
-        />
-      </SearchBoxForm.Group>
-      <SearchBoxForm.Group>
-        <SearchBoxForm.Label>Show:</SearchBoxForm.Label>
+    <SearchBoxWrapper>
+      <SearchBoxForm>
+        <SearchBoxForm.Group>
+          <Inputs
+            placeholder="   search for a github repository"
+            onChange={handleChange}
+          />
+        </SearchBoxForm.Group>
+        <InputGroupBox>
+          <DropdownEl>
+            <DropdownEl.Toggle as={ButtonStyles}>
+              Results per Page:{" "}
+            </DropdownEl.Toggle>
+            <DropdownEl.Menu>
+              <DropdownEl.Item>10</DropdownEl.Item>
+              <DropdownEl.Item>25</DropdownEl.Item>
+              <DropdownEl.Item>50</DropdownEl.Item>
+              <DropdownEl.Item>100</DropdownEl.Item>
+            </DropdownEl.Menu>
+          </DropdownEl>
+        </InputGroupBox>
 
-        <SearchBoxForm.Control size="sm" as="select">
-          <option>10</option>
-          <option>25</option>
-          <option>50</option>
-          <option>100</option>
-        </SearchBoxForm.Control>
-      </SearchBoxForm.Group>
-
-      <SubmitButton type="submit" onClick={handleSubmit}>
-        Search!
-      </SubmitButton>
-    </SearchBoxForm>
+        <SubmitButton type="submit" onClick={handleSubmit}>
+          Search!
+        </SubmitButton>
+      </SearchBoxForm>
+    </SearchBoxWrapper>
   );
 };
 
