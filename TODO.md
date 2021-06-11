@@ -17,7 +17,6 @@ Project Description
 
 ### In Progress
 
-- [ ] add State for results per page  
 - [ ] add first + last pagination  
 - [ ] add next + last pagination  
 
@@ -28,4 +27,7 @@ Project Description
 - [x] need state for totalPages  
 - [x] create correct amount of pagination  
 - [x] allow user to change on page number  
+- [x] added results section  
+- [x] add State for results per page  
+- [x] on change, dispatch per_page option  
 

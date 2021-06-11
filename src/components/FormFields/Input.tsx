@@ -21,18 +21,17 @@ const Input = () => {
   const pageNumber = useSelector(
     (state: State) => state.fetchRepoReducer.pageNumber
   );
-  const perPage = useSelector(
-    (state: State) => state.fetchRepoReducer.perPage
+  const perPage = useSelector((state: State) => state.fetchRepoReducer.perPage);
+  const resultsPerPage = useSelector(
+    (state: State) => state.fetchRepoReducer.resultsPerPage
   );
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
-    // fetchRepos(text, 1, 3);
   };
+
 
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // alert(text);
     fetchRepos(text, pageNumber, perPage);
   };
   return (
@@ -46,14 +45,25 @@ const Input = () => {
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
-            <DropdownEl.Toggle as={ButtonStyles}>
-              Results per Page:{" "}
+            <DropdownEl.Toggle title="gomb" as={ButtonStyles}>
+              {/* Results per Page:{" "} */}
             </DropdownEl.Toggle>
             <DropdownEl.Menu>
-              <DropdownEl.Item>10</DropdownEl.Item>
-              <DropdownEl.Item>25</DropdownEl.Item>
-              <DropdownEl.Item>50</DropdownEl.Item>
-              <DropdownEl.Item>100</DropdownEl.Item>
+              {resultsPerPage.map((perPageAmount: number, i: number) => {
+                return (
+                  <DropdownEl.Item
+                    key={perPageAmount}
+                    onClick={() => {
+                      fetchRepos(text, pageNumber, perPageAmount);
+                      // console.log(fetchRepos(text, 1, 3);)
+
+                      console.log(perPageAmount);
+                    }}
+                  >
+                    {[perPageAmount]}
+                  </DropdownEl.Item>
+                );
+              })}
             </DropdownEl.Menu>
           </DropdownEl>
         </InputGroupBox>
