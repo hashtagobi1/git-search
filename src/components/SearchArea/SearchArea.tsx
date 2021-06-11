@@ -6,6 +6,7 @@ import { SearchWrapper, Paragraph } from "./SearchArea.styles";
 import { useSelector } from "react-redux";
 import { State } from "../../state";
 import ResultCardComponent from "../Result/ResultCardComponent";
+import Pagination from "../Pagination/Pagination"
 
 const SearchArea = () => {
   const totalCount = useSelector(
@@ -44,11 +45,15 @@ const SearchArea = () => {
 
   return (
     <SearchWrapper>
+      {results.length > 0 && <Pagination />}
+
       <Input />
       {input && (
         <Paragraph>Showing {totalCount} available repository results</Paragraph>
       )}
       {fetch()}
+      {/* <Pagination /> */}
+
     </SearchWrapper>
   );
 };

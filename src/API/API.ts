@@ -5,7 +5,9 @@ import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 
 
-const endpoint: string = "https://api.github.com";
+export const endpoint: string = "https://api.github.com";
+
+// Props
 
 // Get RateLimitNumbers
 
