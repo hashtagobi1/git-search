@@ -6,18 +6,25 @@ Project Description
 
 ### Todo
 
+- [ ] rename some variablees: totalCount == repositoriesAmount  
+- [ ] write up documentation + instructions  
+- [ ] testing  
 - [ ] search commits. code, language, etc:https://docs.github.com/en/rest/reference/search  
 - [ ] defaultProps  
 - [ ] typescript  
-- [ ] add results per page functionality + state for the page number  
-- [ ] light dark themes  
-- [ ] framer motion  
 - [ ] api token  
-- [ ] implement pagination  
 
 ### In Progress
 
+- [ ] popup view Details  
+- [ ] CHECK GREEENcreate ellipsse funcitonaloity  
 - [ ] make pagination pretty!  
+- [ ] add axios timeout (10 secs to time out . clear on success)  
+- [ ] framer motion  
+- [ ] light dark themes  
+- [ ] add results per page functionality + state for the page number  
+- [ ] where is read me:????  
+- [ ] only display maybe firs 300 w0rds or so from description  
 
 ### Done ✓
 
@@ -27,8 +34,10 @@ Project Description
 - [x] create correct amount of pagination  
 - [x] allow user to change on page number  
 - [x] added results section  
+- [x] implement pagination  
 - [x] add State for results per page  
 - [x] on change, dispatch per_page option  
+- [x] add edge case for previous on Page 1  
 - [x] add next + last pagination  
 - [x] add first + last pagination  
 

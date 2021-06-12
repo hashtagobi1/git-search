@@ -15,10 +15,14 @@ const initialState: any = {
   totalPages: [],
   responseMessage: null,
   resultsPerPage: [10, 25, 50, 100],
+  pagesShownAmount: [1, 15],
+
+  // ! want to have it like, whatever page we are on. we add 14 more pages to the screen
+  // ! pagesShownAmount: [1, 10], => pagesShownAmount: [pageNumber, pageNumber + 14]
+  // ! [mutable, fixed]
 };
 
 const fetchRepoReducer = (state = initialState, action: Action) => {
-  // console.log("Middleware: Fetch Repos");
   switch (action.type) {
     case ActionType.FETCH_REPOS_REQUEST:
       return {
@@ -41,6 +45,7 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
         totalPages: action.totalPages,
         responseMessage: action.responseMessage,
         resultsPerPage: action.resultsPerPage,
+        pagesShownAmount: action.pagesShownAmount,
       };
     case ActionType.FETCH_REPOS_ERROR:
       return {
@@ -49,6 +54,7 @@ const fetchRepoReducer = (state = initialState, action: Action) => {
         errorState: true,
         errorMessage: action.errorMessage,
         items: [[], 0],
+        perPage: action.perPage,
       };
     default:
       return state;

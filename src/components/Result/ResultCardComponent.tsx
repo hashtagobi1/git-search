@@ -1,9 +1,19 @@
-import { ResultCard } from "./Result.styles";
+// Styles
+import { MyButton } from "../HeaderBar/HeaderBar.styles";
+import {
+  ResultCard,
+  ResultContainer,
+  ResultTitle,
+  ResultBody,
+  ResultHeader,
+  LinkTag,
+  ModalPop,
+  SpreaderContainer,
+} from "./Result.styles";
 
 // State Management
 import { useSelector } from "react-redux";
 import { State } from "../../state";
-import { MyButton } from "../HeaderBar/HeaderBar.styles";
 const ResultCardComponent = () => {
   const results = useSelector(
     (state: State) => state.fetchRepoReducer.items[0]
@@ -21,64 +31,81 @@ const ResultCardComponent = () => {
     return stringDate.slice(0, 15);
   };
 
+  const showModal = () => {
+
+    // ? view more repo info.... a coomponent or
+
+    // ! Button to jump back to previous search... 
+          // ! the link on the button would be a fetch with the current state properties
+
+    
+    // * creaate state for showing modal... set it to true
+
+    // * let x set it to false!!!
+    // () =>
+    // ! alert(`dispatch action to show popup of more details!
+    // ! owners name:
+    // ! languages
+    // ! sizes
+    // ! readme
+    //  ! liiiimit the description
+    console.log("showModal");
+  };
+
   return (
-    <div>
+    <ResultContainer>
       {results ? (
         results.map((result: any) => {
+          let description = result.description;
+          let username = result.full_name.split("/");
+          username = username[0];
+
+          if (!description) {
+            description = "No description provided";
+          }
+
           return (
-            <ResultCard bg="light" border="dark" key={result.id}>
-              {/* <ResultCard.Img variant="top" src={result.owner.avatar_url} height="25" width="25"/> */}
-              <ResultCard.Body>
-                <ResultCard.Title>
-                  Repository:
-                  <a href={result.html_url}>{result.name}</a>
-                </ResultCard.Title>
-                <ResultCard.Subtitle>
-                  User: {result.full_name}          
-                </ResultCard.Subtitle>
-                <ResultCard.Header>
-                  Stars 🌟: {result.stargazers_count}   <br/>        
-                  Open Issues:🐛 {result.open_issues_count}<br/>    
-                  Forks:🍴 {result.forks_count}
-                </ResultCard.Header>
-                <ResultCard.Text>
-                  Description: 📝 {result.description}
-                </ResultCard.Text>
+            <>
+              <ResultCard bg="light" border="dark" key={result.id}>
+                {/* <ResultCard.Img variant="top" src={result.owner.avatar_url} height="25" width="25"/> */}
+                <ResultBody>
+                  <SpreaderContainer>
+                    <ResultCard.Title>
+                      Repo Name:{" "}
+                      <LinkTag href={result.html_url}>{result.name}</LinkTag>
+                    </ResultCard.Title>
+                  </SpreaderContainer>
+                  <ResultCard.Subtitle>User: {username}</ResultCard.Subtitle>
+                  <ResultCard.Header as={ResultHeader}>
+                    {/* Stars  */}
+                    🌟: {result.stargazers_count} <br />
+                    {/* Open Issues: */}
+                    🐛: {result.open_issues_count}
+                    <br />
+                    {/* Forks: */}
+                    🍴: {result.forks_count}
+                  </ResultCard.Header>
+                  <ResultCard.Text>
+                    Description: 📝{" "}
+                    {`${description.slice(
+                      0,
+                      85
+                    )}...       CLICK ME TO VIEW MORE`}
+                  </ResultCard.Text>
 
-                <ResultCard.Footer>
-                  Created On {parseDate(result.created_at)}
-                </ResultCard.Footer>
-              </ResultCard.Body>
-              <MyButton
-                onClick={() =>
-                  alert(`dispatch action to show popup of more details!
-              owners name:
-              languages
-              sizes
-              readme
-
-              liiiimit the description
-
-
-
-              PAGINATIONONNN
-              https://react-bootstrap.github.io/components/pagination/
-
-
-              
-              `)
-                }
-              >
-                {" "}
-                View Details
-              </MyButton>
-            </ResultCard>
+                  <ResultCard.Footer>
+                    Created On {parseDate(result.created_at)}
+                  </ResultCard.Footer>
+                </ResultBody>
+                <MyButton onClick={showModal}>View Details</MyButton>
+              </ResultCard>
+            </>
           );
         })
       ) : (
         <h1>noope</h1>
       )}
-    </div>
+    </ResultContainer>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   DarkParagraph,
   LightParagraph,
   ResultDetails,
+  SpinnerLoad,
 } from "./SearchArea.styles";
 
 // State Management
@@ -73,7 +74,16 @@ const SearchArea = () => {
 
   const fetch = () => {
     if (loadingState === true) {
-      return <h1>Loading! Framer Motion</h1>;
+      return (
+        <SearchWrapper>
+          <SpinnerLoad
+            variant="success"
+            animation="border"
+            role="status"
+          ></SpinnerLoad>
+          <h1>Loading... Framer Motion</h1>
+        </SearchWrapper>
+      );
     } else if (errorState) {
       return (
         <div>

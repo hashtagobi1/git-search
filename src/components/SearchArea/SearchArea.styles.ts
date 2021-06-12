@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import Spinner from "react-bootstrap/Spinner"
 
-export const SearchWrapper = styled.div``;
+export const SearchWrapper = styled.div`
+
+`;
 
 export const DarkParagraph = styled.p`
   font-weight: bold;
@@ -20,3 +23,6 @@ export const ResultDetails = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+
+export const SpinnerLoad = styled(Spinner)``

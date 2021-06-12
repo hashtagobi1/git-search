@@ -33,6 +33,13 @@ const Input = () => {
     e.preventDefault();
     fetchRepos(text, pageNumber, perPage);
   };
+
+  const handleKeyDown = (e: any) => {
+    if(e.code === "Enter"){
+      fetchRepos(text, pageNumber, 10);
+
+    } return
+  };
   return (
     <SearchBoxWrapper>
       <SearchBoxForm>
@@ -40,13 +47,14 @@ const Input = () => {
           <Inputs
             placeholder="   search for a github repository"
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
             {/* <SearchBoxForm.Label >Results Per Page:</SearchBoxForm.Label> */}
             <DropdownEl.Toggle as={ButtonStyles}>
-              Results per Page:{resultsPerPage}
+              Results per Page: {perPage}
             </DropdownEl.Toggle>
             <DropdownEl.Menu>
               {resultsPerPage.map((perPageAmount: number, i: number) => {

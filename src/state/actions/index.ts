@@ -10,9 +10,9 @@ interface FetchRepos_SUCCESS {
   pageNumber: number;
   perPage: number;
   totalPages: number[];
-  responseMessage:string | null
-  resultsPerPage: number[]
-
+  responseMessage: string | null;
+  resultsPerPage: number[];
+  pagesShownAmount: number[];
 }
 
 interface FetchRepos_REQUEST {
@@ -26,6 +26,7 @@ interface FetchRepos_ERROR {
   errorState: boolean;
   errorMessage: string;
   error: Error | null;
+  perPage:number
 }
 
 interface SetInput {
