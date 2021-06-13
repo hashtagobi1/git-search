@@ -3,10 +3,11 @@ import {
   SearchBoxForm,
   SubmitButton,
   InputGroupBox,
-  DropdownEl,
   Inputs,
   SearchBoxWrapper,
+  MagGlass,
 } from "./Input.styles";
+import { DropdownEl } from "../Buttons/Button.styles";
 
 // State Management
 import { useSelector, useDispatch } from "react-redux";
@@ -34,21 +35,29 @@ const Input = () => {
     fetchRepos(text, pageNumber, perPage);
   };
 
-  const handleKeyDown = (e: any) => {
-    if(e.code === "Enter"){
-      fetchRepos(text, pageNumber, 10);
+  const searchClick = () => {
+    fetchRepos(text, pageNumber, perPage);
 
-    } return
+    console.log("hey");
+  };
+  const handleKeyDown = (e: any) => {
+    if (e.code === "Enter") {
+      fetchRepos(text, pageNumber, 10);
+    }
+    return;
   };
   return (
     <SearchBoxWrapper>
       <SearchBoxForm>
         <SearchBoxForm.Group>
-          <Inputs
-            placeholder="   search for a github repository"
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-          />
+          <InputGroupBox>
+            <Inputs
+              placeholder="   search for a github repository"
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
+            <MagGlass onClick={searchClick} />
+          </InputGroupBox>
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
@@ -63,9 +72,6 @@ const Input = () => {
                     key={perPageAmount}
                     onClick={() => {
                       fetchRepos(text, pageNumber, perPageAmount);
-                      // console.log(fetchRepos(text, 1, 3);)
-
-                      // console.log(i);
                     }}
                   >
                     {[perPageAmount]}

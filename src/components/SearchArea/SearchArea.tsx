@@ -42,7 +42,6 @@ const SearchArea = () => {
   );
 
   const input = useSelector((state: State) => state.inputReducer.input);
-  console.log(results);
 
   const displayResults = (): string => {
     let resultsLeft = 0;
@@ -71,6 +70,17 @@ const SearchArea = () => {
 
     return `Showing results: ${resultsLeft} - ${resultsRight}`;
   };
+  const renderPagination = () => {
+    return (
+      results.length > 0 && (
+        <Pagination
+          totalCount={totalCount}
+          totalResults={results.length}
+          resultsArray={results}
+        />
+      )
+    );
+  };
 
   const fetch = () => {
     if (loadingState === true) {
@@ -98,6 +108,7 @@ const SearchArea = () => {
   return (
     <SearchWrapper>
       <Input />
+
       {input && results && (
         <ResultDetails>
           <DarkParagraph>
@@ -113,14 +124,9 @@ const SearchArea = () => {
           <LightParagraph>"{input}"</LightParagraph>
         </>
       )}
-      {results.length > 0 && (
-        <Pagination
-          totalCount={totalCount}
-          totalResults={results.length}
-          resultsArray={results}
-        />
-      )}
+      {renderPagination()}
       {fetch()}
+      {renderPagination()}
     </SearchWrapper>
   );
 };

@@ -1,16 +1,16 @@
 import React from "react";
 import {
+  Gap,
   PaginationEl,
   PaginationWrapper,
   PaginContainer,
 } from "../Pagination/Pagination.styles";
+import { DropdownEl,ButtonStyles } from "../Buttons/Button.styles";
 // State Management
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
 
-// utils
-import _ from "lodash";
 interface PaginationProps {
   totalCount: number;
   totalResults: number;
@@ -41,18 +41,12 @@ const Pagination = ({
 
   const checkPage = () => {
     if (pageNumber >= extraPages) {
-      console.log(extraPages);
     }
 
-    console.log("this is the page number" + pageNumber);
-    console.log("this is the totalPages" + totalPages.length);
     if (
       pageNumber >= totalPages.length ||
       (totalCount === 0 && totalResults === 0)
     ) {
-      console.log("Total Repos = " + totalCount);
-      console.log("Total Results showing = " + totalResults);
-
       return fetchRepos(text, 1, perPage);
     }
     fetchRepos(text, pageNumber + 1, perPage);
@@ -60,7 +54,6 @@ const Pagination = ({
 
   const prevPage = () => {
     if (pageNumber <= 1) {
-      console.log("we here");
       return fetchRepos(text, totalPages.length, perPage);
     }
 
@@ -80,17 +73,18 @@ const Pagination = ({
           <PaginationEl.Prev onClick={prevPage} />
           {/* Filling in the pages */}
 
+          <Gap>&nbsp;</Gap>
           {totalPages.map((page: undefined, arrayIndex: number) => {
             if (arrayIndex === 0) {
               return;
             } else if (totalCount > 0 && arrayIndex <= extraPages) {
-              console.log(extraPages);
               return (
                 <PaginationEl.Item
                   onClick={() => {
                     fetchRepos(text, arrayIndex, perPage);
                   }}
                   key={arrayIndex}
+                  disabled={pageNumber === arrayIndex}
                   active={pageNumber === arrayIndex}
                   activeLabel=""
                 >
@@ -103,31 +97,52 @@ const Pagination = ({
           })}
 
           {totalPages.length > extraPages && (
-            <PaginationEl.Ellipsis
-              activeLabel="stuff"
+            // <PaginationEl.Ellipsis activeLabel="stuff" />
+
+            <DropdownEl>
+              <DropdownEl.Toggle
+              
+              as={ButtonStyles}
+              >...More</DropdownEl.Toggle>
+              <DropdownEl.Menu>
+                {totalPages.map((page: undefined, arrayIndex: number) => {
+                  if (arrayIndex === 0) {
+                    return;
+                  } else if (totalCount > 0 && arrayIndex > extraPages) {
+                    return (
+                      <DropdownEl.Item
+                        as={PaginationEl.Item}
+                        onClick={() => {
+                          fetchRepos(text, arrayIndex, perPage);
+                        }}
+                        key={arrayIndex}
+                        active={pageNumber === arrayIndex}
+                        disabled={pageNumber === arrayIndex}
+                      >
+                        {arrayIndex}
+                      </DropdownEl.Item>
+                    );
+                  }
+                })}
+              </DropdownEl.Menu>
+            </DropdownEl>
 
 
-              // * BEST SOLUTION. WE INITIALLY RENDER OUT 15 ELEMENTS. 
-              // * ON CLICK WE PUSH EACH ELEMENT OUT
-              // * STARTING AT PAGE NUMBER THEN ADD 15 TO EXTRA PAGES
-
-
-              // ! or just wrap them round
-
-              // ? WOULD BE FOR NEXT + PREVIOS BUTTONS
-            />
           )}
 
           {/* Last Item */}
           <PaginationEl.Item
             active={pageNumber === totalPages.length}
             activeLabel=""
+            disabled={pageNumber === totalPages.length}
             onClick={() => {
               fetchRepos(text, totalPages.length, perPage);
             }}
           >
             {totalPages.length}
           </PaginationEl.Item>
+          <Gap>&nbsp;</Gap>
+
 
           <PaginationEl.Next activeLabel="stuff" onClick={checkPage} />
           <PaginationEl.Last

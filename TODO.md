@@ -6,6 +6,7 @@ Project Description
 
 ### Todo
 
+- [ ] API TOEKN INCREASE  
 - [ ] rename some variablees: totalCount == repositoriesAmount  
 - [ ] write up documentation + instructions  
 - [ ] testing  
@@ -16,10 +17,11 @@ Project Description
 
 ### In Progress
 
+- [ ] PLAN DETAILS PAGE  
+- [ ] add main langyuage used  
+- [ ] BEST PRACTICES SEARCH BOX  
 - [ ] popup view Details  
-- [ ] CHECK GREEENcreate ellipsse funcitonaloity  
 - [ ] make pagination pretty!  
-- [ ] add axios timeout (10 secs to time out . clear on success)  
 - [ ] framer motion  
 - [ ] light dark themes  
 - [ ] add results per page functionality + state for the page number  
@@ -28,6 +30,8 @@ Project Description
 
 ### Done ✓
 
+- [x] add axios timeout (10 secs to time out . clear on success)  
+- [x] CHECK GREEENcreate ellipsse funcitonaloity  
 - [x] add page number functionality  
 - [x] need state for per page  
 - [x] need state for totalPages  

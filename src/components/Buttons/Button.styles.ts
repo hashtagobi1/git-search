@@ -1,10 +1,11 @@
-import { Button } from "react-bootstrap";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export const ButtonStyles = styled(Button)`
   text-align: center;
   outline: none !important;
-/* ${({background}) => background ? '#000': '#66c6cc'} */
+  /* ${({ background }) => (background ? "#000" : "#66c6cc")} */
 
   background: #66c6cc;
   color: black;
@@ -36,4 +37,10 @@ export const ButtonStyles = styled(Button)`
   :visited {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
   }
+`;
+
+export const DropdownEl = styled(Dropdown)`
+  /* background: #66c6cc; */
+
+  color:black;
 `;

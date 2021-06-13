@@ -44,6 +44,8 @@ export const fetchRepos =
     await axios
       .get(newEndpoint, headerConfig)
       .then((response) => {
+        console.log(response)
+
         const amountOfPages = Math.ceil(response.data.total_count / perPage);
 
         if (response.data.total_count === 0) {
@@ -58,9 +60,6 @@ export const fetchRepos =
             totalPages: [...Array(amountOfPages)],
             responseMessage: "No results found for search: ",
             resultsPerPage: [10, 25, 50, 100],
-            // ! want to have it like, whatever page we are on. we add 14 more pages to the screen
-            // ! pagesShownAmount: [1, 10], => pagesShownAmount: [pageNumber, pageNumber + 14]
-            // ! [mutable, fixed]
             pagesShownAmount: [pageNumber, 15],
           });
         } else if (response) {
@@ -81,6 +80,7 @@ export const fetchRepos =
       })
       .catch((error) => {
         console.log(error);
+        console.log(error)
 
         if (error.message.includes("422")) {
           return dispatch({
