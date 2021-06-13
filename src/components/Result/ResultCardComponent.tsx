@@ -21,7 +21,6 @@ import ReactMarkdown from "react-markdown";
 // import  allLogo from 'programming-languages-logos/src/swift/swift.svg
 // import  allLogo from 'programming-languages-logos/src/languages.json'
 import swift from 'programming-languages-logos/src/swift/swift.svg'
-import allLang from "programming-languages-logos/src/languages.json"
 
 
 
@@ -197,7 +196,7 @@ const ResultCardComponent = () => {
                     {`${description.slice(
                       0,
                       85
-                    )}...       CLICK ME TO VIEW MORE`}
+                    )}...`}
                   </ResultCard.Text>
 
                   <ResultCard.Footer>
@@ -236,14 +235,25 @@ const ResultCardComponent = () => {
                   {console.log(realUser, result.name)}
                   {/* {console.log(realUser)} */}
                   <Showing as={ProfileCard}>
-                    <h1>RepoName: {result.name}</h1>
-                    <h3>UserName: {realUser}</h3>
-                    🌟: {result.stargazers_count}
+                    <h1>RepoName: 
+                      
+                      <LinkTag
+                      target="_blank" 
+                      href={result.html_url}
+                      >
+                      {result.name}
+                      
+                      </LinkTag>
+                      
+                      
+                      </h1>
+                    <h3>User: {realUser}</h3>
+                   Stars 🌟: {result.stargazers_count}
                     <br />
 
-                    🐛: {result.open_issues_count}
+                   Bugs 🐛: {result.open_issues_count}
                     <br />
-                    🍴: {result.forks_count}
+                 Forks   🍴: {result.forks_count}
                     <br />
                     Main Language: {result.language} 
                     {/* <i 
@@ -252,18 +262,20 @@ const ResultCardComponent = () => {
                     
                     ></i> */}
                    
-                    <img 
+                    {/* <img 
                     height="36"
                     width="36"
                     
                     // src={allLang.results.language}
                     alt="programming logo"
-                    />
+                    /> */}
                     
 
                     <br />
+                    <p>
                     Description: <br />
                     {result.description}
+                    </p>
                     <br />
                     <br />
                     <MarkdownWrapper>

@@ -12,21 +12,26 @@ Project Description
 - [ ] defaultProps  
 - [ ] typescript  
 - [ ] api token  
+- [ ] add main langyuage used image  
+- [ ] light dark themes  
 
 ### In Progress
 
-- [ ] add links to n pages  
-- [ ] testing [shallow renders]  
+- [ ] upload 10:30  
 - [ ] make details page pretty  
-- [ ] add main langyuage used image  
+- [ ] testing [shallow renders]  
+- [ ] create folder for mock ups  
+- [ ] add insstructions + process  
+- [ ] make detailed component pretty  
+- [ ] clean up all folders + REMOVE ANY word  
 - [ ] framer motion [loading, animate on exit, animation on detailed view)  
 - [ ] API TOEKN INCREASE  
-- [ ] light dark themes  
 
 ### Done ✓
 
 - [x] create details page  
 - [x] make pagination pretty!  
+- [x] add links to n pages  
 - [x] popup view Details  
 - [x] only display maybe firs 300 w0rds or so from description  
 - [x] where is read me:????  

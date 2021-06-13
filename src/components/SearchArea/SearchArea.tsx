@@ -110,14 +110,13 @@ const SearchArea = () => {
   return (
     <SearchWrapper>
       <Input />
-
       {input && results && (
         <ResultDetails>
           <DarkParagraph>
             Showing {totalCount} available repository results
           </DarkParagraph>
 
-          <LightParagraph> {displayResults()}</LightParagraph>
+         {!modalState && <LightParagraph> {displayResults()}</LightParagraph>}
         </ResultDetails>
       )}
       {responseMessage && (
