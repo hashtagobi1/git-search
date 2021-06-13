@@ -12,6 +12,13 @@ export const headerConfig = {
   },
 };
 
+export const headerReadMe = {
+  headers: {
+    "Content-Type": "application/vnd.github.VERSION.raw",
+  },
+};
+
+
 // Props
 
 // Get RateLimitNumbers

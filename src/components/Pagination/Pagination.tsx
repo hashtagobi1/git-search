@@ -5,7 +5,7 @@ import {
   PaginationWrapper,
   PaginContainer,
 } from "../Pagination/Pagination.styles";
-import { DropdownEl,ButtonStyles } from "../Buttons/Button.styles";
+import { DropdownEl, ButtonStyles } from "../Buttons/Button.styles";
 // State Management
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -23,7 +23,10 @@ const Pagination = ({
   resultsArray,
 }: PaginationProps) => {
   const dispatch = useDispatch();
-  const { fetchRepos } = bindActionCreators(actionCreators, dispatch);
+  const { fetchRepos, showModal } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const pageNumber: number = useSelector(
     (state: State) => state.fetchRepoReducer.pageNumber
@@ -37,9 +40,14 @@ const Pagination = ({
   const extraPages: number = useSelector(
     (state: State) => state.fetchRepoReducer.pagesShownAmount[1]
   );
+  const modalState: boolean = useSelector(
+    (state: State) => state.showModalReducer.showModal
+  );
   const text: string = useSelector((state: State) => state.inputReducer.input);
 
   const checkPage = () => {
+    showModal(false);
+
     if (pageNumber >= extraPages) {
     }
 
@@ -53,6 +61,8 @@ const Pagination = ({
   };
 
   const prevPage = () => {
+    showModal(false);
+
     if (pageNumber <= 1) {
       return fetchRepos(text, totalPages.length, perPage);
     }
@@ -67,6 +77,8 @@ const Pagination = ({
           <PaginationEl.First
             activeLabel=""
             onClick={() => {
+              showModal(false);
+
               fetchRepos(text, 1, perPage);
             }}
           />
@@ -81,6 +93,8 @@ const Pagination = ({
               return (
                 <PaginationEl.Item
                   onClick={() => {
+                    showModal(false);
+
                     fetchRepos(text, arrayIndex, perPage);
                   }}
                   key={arrayIndex}
@@ -100,10 +114,7 @@ const Pagination = ({
             // <PaginationEl.Ellipsis activeLabel="stuff" />
 
             <DropdownEl>
-              <DropdownEl.Toggle
-              
-              as={ButtonStyles}
-              >...More</DropdownEl.Toggle>
+              <DropdownEl.Toggle as={ButtonStyles}>...More</DropdownEl.Toggle>
               <DropdownEl.Menu>
                 {totalPages.map((page: undefined, arrayIndex: number) => {
                   if (arrayIndex === 0) {
@@ -113,6 +124,8 @@ const Pagination = ({
                       <DropdownEl.Item
                         as={PaginationEl.Item}
                         onClick={() => {
+                          showModal(false);
+
                           fetchRepos(text, arrayIndex, perPage);
                         }}
                         key={arrayIndex}
@@ -126,8 +139,6 @@ const Pagination = ({
                 })}
               </DropdownEl.Menu>
             </DropdownEl>
-
-
           )}
 
           {/* Last Item */}
@@ -136,6 +147,8 @@ const Pagination = ({
             activeLabel=""
             disabled={pageNumber === totalPages.length}
             onClick={() => {
+              showModal(false);
+
               fetchRepos(text, totalPages.length, perPage);
             }}
           >
@@ -143,11 +156,12 @@ const Pagination = ({
           </PaginationEl.Item>
           <Gap>&nbsp;</Gap>
 
-
           <PaginationEl.Next activeLabel="stuff" onClick={checkPage} />
           <PaginationEl.Last
             activeLabel=""
             onClick={() => {
+              showModal(false);
+
               fetchRepos(text, totalPages.length, perPage);
             }}
           />

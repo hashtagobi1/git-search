@@ -47,3 +47,37 @@ export const SpreaderContainer = styled.div`
 export const LinkTag = styled.a``;
 
 export const ModalPop = styled(Modal);
+
+export const Showing = styled.div`
+  background: green;
+`;
+export const NotShowing = styled.div`
+  background: red;
+  display:none;
+  :after{
+    content:"";
+    display:none;
+  }
+`;
+export const ProfileCard = styled(Container)`
+background:white;
+border: solid 1px black;
+border-radius:15px;
+overflow: auto;
+/* width:100vw; */
+/* display:grid; */
+/* grid-template-columns: 1fr  1fr; */
+
+
+
+`
+
+export const MarkdownWrapper = styled.div`
+
+/* display:grid; */
+width:100vw;
+/* flex-direction:column; */
+/* justify-content:center; */
+/* align-items:center; */
+/* background:red; */
+`

@@ -40,7 +40,9 @@ const SearchArea = () => {
   const totalPages = useSelector(
     (state: State) => state.fetchRepoReducer.totalPages
   );
-
+  const modalState: boolean = useSelector(
+    (state: State) => state.showModalReducer.showModal
+  );
   const input = useSelector((state: State) => state.inputReducer.input);
 
   const displayResults = (): string => {
@@ -124,9 +126,9 @@ const SearchArea = () => {
           <LightParagraph>"{input}"</LightParagraph>
         </>
       )}
-      {renderPagination()}
+      {!modalState && renderPagination()}
       {fetch()}
-      {renderPagination()}
+      {!modalState && renderPagination()}
     </SearchWrapper>
   );
 };

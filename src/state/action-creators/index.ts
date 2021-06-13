@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { Action } from "../actions/index";
 import axios from "axios";
 import { SearchResponseData } from "../../API/API";
-import { endpoint, headerConfig } from "../../API/API";
+import { endpoint, headerConfig, headerReadMe } from "../../API/API";
 
 // ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
 
@@ -44,8 +44,6 @@ export const fetchRepos =
     await axios
       .get(newEndpoint, headerConfig)
       .then((response) => {
-        console.log(response)
-
         const amountOfPages = Math.ceil(response.data.total_count / perPage);
 
         if (response.data.total_count === 0) {
@@ -79,9 +77,6 @@ export const fetchRepos =
         }
       })
       .catch((error) => {
-        console.log(error);
-        console.log(error)
-
         if (error.message.includes("422")) {
           return dispatch({
             type: ActionType.FETCH_REPOS_ERROR,
@@ -112,3 +107,120 @@ export const setInput = (userText: string) => {
     });
   };
 };
+
+export const getReadMe =
+  (user: string, repoName: string) =>
+  async (dispatch: Dispatch<Action>, getState: any) => {
+    // console.log(user);
+    // console.log(repoName);
+    // ! parameters: reponame -> from results.name
+    // ! parameters: owner -> from results.fullname
+    const newEndpoint = `${endpoint}/repos/${user}/${repoName}/readme`;
+
+    // ! GET /repos/{owner}/{repo}/readme
+
+    // * add middle ware
+
+    // Dispatch First Request
+    dispatch({
+      type: ActionType.GET_README_REQUEST,
+      readMe: "",
+      loading: true,
+    });
+
+    await axios
+      .get(newEndpoint, headerReadMe)
+      .then((response) => {
+        if (response.data.content === undefined || response.data.content ===null) {
+          return dispatch({
+            type: ActionType.GET_README_SUCCESS,
+            readMe: "",
+            loading: false,
+            errorState: false,
+          });
+        }
+
+        // console.log(response.data.content)
+        dispatch({
+          type: ActionType.GET_README_SUCCESS,
+          readMe: response.data.content,
+          loading: false,
+          errorState: false,
+        });
+      })
+      .catch((error) => {
+        // ! if repo is undefined
+        // if (repoName === null || repoName === undefined) {
+        //   repoName = "";
+        // }
+        // console.log(error);
+        dispatch({
+          type: ActionType.GET_README_ERROR,
+          readMe: "",
+          loading: false,
+          errorState: true,
+        });
+      });
+  };
+
+export const showModal = (showing: boolean) => {
+  // const inverted = !showing;
+  return (dispatch: Dispatch<Action>) => {
+    // console.log("We are in the thunk: State => : " + showing);
+
+    return dispatch({
+      type: ActionType.INVERT_MODAL,
+      showModal: showing,
+    });
+
+    // if (showing === false) {
+    // console.log("False Clause State => : " + showing);
+
+    //   return dispatch({
+    //     type: ActionType.INVERT_MODAL,
+    //     showModal: !showing,
+    //   });
+    // } else if (showing === true) {
+    // console.log("True Clause State => : " + showing);
+
+    //   dispatch({
+    //     type: ActionType.INVERT_MODAL,
+    //     showModal: false,
+    //   });
+
+    // }
+  };
+};
+
+export const getUserRepo =
+  (full_name: string) =>
+  async (dispatch: Dispatch<Action>, getState: any) => {
+    const newEndpoint = `${endpoint}/repos/${full_name}`;
+
+    dispatch({
+      type: ActionType.GET_USER_REPO_REQUEST,
+      repoEndpoint: "",
+      loading: true,
+    });
+    await axios
+      .get(newEndpoint, headerConfig)
+      .then((response) => {
+        return dispatch({
+          type: ActionType.GET_USER_REPO_SUCCESS,
+          repoEndpoint: newEndpoint,
+          loading: false,
+          errorState: true,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return dispatch({
+          type: ActionType.GET_USER_REPO_SUCCESS,
+          repoEndpoint: newEndpoint,
+          loading: false,
+          errorState: true,
+          payload: error,
+        });
+      });
+  };

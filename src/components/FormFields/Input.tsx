@@ -17,7 +17,10 @@ import { ButtonStyles } from "../Buttons/Button.styles";
 
 const Input = () => {
   const dispatch = useDispatch();
-  const { setInput, fetchRepos } = bindActionCreators(actionCreators, dispatch);
+  const { setInput, fetchRepos, showModal } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
   const text = useSelector((state: State) => state.inputReducer.input);
   const pageNumber = useSelector(
     (state: State) => state.fetchRepoReducer.pageNumber
@@ -26,21 +29,29 @@ const Input = () => {
   const resultsPerPage = useSelector(
     (state: State) => state.fetchRepoReducer.resultsPerPage
   );
+  const modalState: boolean = useSelector(
+    (state: State) => state.showModalReducer.showModal
+  );
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    showModal(false)
+
     e.preventDefault();
     fetchRepos(text, pageNumber, perPage);
   };
 
   const searchClick = () => {
+    showModal(false)
+
     fetchRepos(text, pageNumber, perPage);
 
-    console.log("hey");
+    // console.log("hey");
   };
   const handleKeyDown = (e: any) => {
+    showModal(false)
     if (e.code === "Enter") {
       fetchRepos(text, pageNumber, 10);
     }
@@ -71,6 +82,8 @@ const Input = () => {
                   <DropdownEl.Item
                     key={perPageAmount}
                     onClick={() => {
+                      showModal(false);
+
                       fetchRepos(text, pageNumber, perPageAmount);
                     }}
                   >

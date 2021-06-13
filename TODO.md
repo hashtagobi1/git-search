@@ -6,10 +6,8 @@ Project Description
 
 ### Todo
 
-- [ ] API TOEKN INCREASE  
 - [ ] rename some variablees: totalCount == repositoriesAmount  
 - [ ] write up documentation + instructions  
-- [ ] testing  
 - [ ] search commits. code, language, etc:https://docs.github.com/en/rest/reference/search  
 - [ ] defaultProps  
 - [ ] typescript  
@@ -17,19 +15,24 @@ Project Description
 
 ### In Progress
 
-- [ ] PLAN DETAILS PAGE  
-- [ ] add main langyuage used  
-- [ ] BEST PRACTICES SEARCH BOX  
-- [ ] popup view Details  
-- [ ] make pagination pretty!  
-- [ ] framer motion  
+- [ ] add links to n pages  
+- [ ] testing [shallow renders]  
+- [ ] make details page pretty  
+- [ ] add main langyuage used image  
+- [ ] framer motion [loading, animate on exit, animation on detailed view)  
+- [ ] API TOEKN INCREASE  
 - [ ] light dark themes  
-- [ ] add results per page functionality + state for the page number  
-- [ ] where is read me:????  
-- [ ] only display maybe firs 300 w0rds or so from description  
 
 ### Done ✓
 
+- [x] create details page  
+- [x] make pagination pretty!  
+- [x] popup view Details  
+- [x] only display maybe firs 300 w0rds or so from description  
+- [x] where is read me:????  
+- [x] add results per page functionality + state for the page number  
+- [x] BEST PRACTICES SEARCH BOX  
+- [x] PLAN DETAILS PAGE  
 - [x] add axios timeout (10 secs to time out . clear on success)  
 - [x] CHECK GREEENcreate ellipsse funcitonaloity  
 - [x] add page number functionality  
