@@ -24,10 +24,9 @@ Please choose to view via the online/offline versions
 
 ## Mock up designs 🎨
 
-![alt text]("./src/mockups/Home.png")
-
-![alt text]("./src/mockups/Search_Results.png")
-![alt text]("./src/mockups/detail_page.png")
+![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/Home.png")
+![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/Search_Results.png)
+![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/detail_page.png")
 
 
 
