@@ -99,7 +99,6 @@ const ResultCardComponent = () => {
                     Created On {parseDate(result.created_at)}
                   </ResultCard.Footer>
                 </ResultBody>
-                <MyButton>show result ID</MyButton>
                 <MyButton
                   onClick={printName.bind(
                     this,
