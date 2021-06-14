@@ -11,20 +11,10 @@ import {
   SpreaderContainer,
   Showing,
   NotShowing,
-  ProfileCard,
-  MarkdownWrapper
 } from "./Result.styles";
-// utils
-import { Base64 } from "js-base64";
-import ReactMarkdown from "react-markdown";
 
 // import  allLogo from 'programming-languages-logos/src/swift/swift.svg
 // import  allLogo from 'programming-languages-logos/src/languages.json'
-import swift from 'programming-languages-logos/src/swift/swift.svg'
-
-
-
-
 
 // State Management
 import { useSelector, useDispatch } from "react-redux";
@@ -34,9 +24,7 @@ import DetailedView from "../DetailedView/DetailedView";
 
 const ResultCardComponent = () => {
   let results = useSelector((state: State) => state.fetchRepoReducer.items[0]);
-  const base64_readMe: string = useSelector(
-    (state: State) => state.readMeReducer.readMe
-  );
+
   const repoEndpoint: string = useSelector(
     (state: State) => state.getUserRepoReducer.repoEndpoint
   );
@@ -53,7 +41,6 @@ const ResultCardComponent = () => {
   const modalState: boolean = useSelector(
     (state: State) => state.showModalReducer.showModal
   );
-  const readMeInMarkdown = Base64.decode(base64_readMe);
 
   const dispatch = useDispatch();
   const { getReadMe, showModal, fetchRepos, getUserRepo } = bindActionCreators(
@@ -105,15 +92,9 @@ const ResultCardComponent = () => {
     // ! getReadMe(repoOwner, reponame)
   };
 
-  const languageChecker = (languageName:string) =>{
-
-
-    return "shey"
-
-
-
-    
-  }
+  const languageChecker = (languageName: string) => {
+    return "shey";
+  };
 
   const printName = async (destination: string) => {
     await showModal(!modalState);
@@ -145,7 +126,7 @@ const ResultCardComponent = () => {
           //?  hashtagobi1/ShoppingCart
 
           let str = result.full_name.split("/");
-          const realUser = str[0];
+          const username = str[0];
           let destination = result.full_name;
           // console.log(result.full_name);
           let description: string = result.description;
@@ -193,10 +174,7 @@ const ResultCardComponent = () => {
                     🍴: {result.forks_count}
                   </ResultCard.Header>
                   <ResultCard.Text>
-                    {`${description.slice(
-                      0,
-                      85
-                    )}...`}
+                    {`${description.slice(0, 85)}...`}
                   </ResultCard.Text>
 
                   <ResultCard.Footer>
@@ -231,61 +209,10 @@ const ResultCardComponent = () => {
                 <>
                   <MyButton onClick={handleSubmit}>Back To Results</MyButton>
 
-                  {console.log(getReadMe(realUser, result.name))}
-                  {console.log(realUser, result.name)}
+                  {console.log(getReadMe(username, result.name))}
+                  {console.log(username, result.name)}
                   {/* {console.log(realUser)} */}
-                  <Showing as={ProfileCard}>
-                    <h1>RepoName: 
-                      
-                      <LinkTag
-                      target="_blank" 
-                      href={result.html_url}
-                      >
-                      {result.name}
-                      
-                      </LinkTag>
-                      
-                      
-                      </h1>
-                    <h3>User: {realUser}</h3>
-                   Stars 🌟: {result.stargazers_count}
-                    <br />
-
-                   Bugs 🐛: {result.open_issues_count}
-                    <br />
-                 Forks   🍴: {result.forks_count}
-                    <br />
-                    Main Language: {result.language} 
-                    {/* <i 
-                    className="swift"
-                    src={swift}
-                    
-                    ></i> */}
-                   
-                    {/* <img 
-                    height="36"
-                    width="36"
-                    
-                    // src={allLang.results.language}
-                    alt="programming logo"
-                    /> */}
-                    
-
-                    <br />
-                    <p>
-                    Description: <br />
-                    {result.description}
-                    </p>
-                    <br />
-                    <br />
-                    <MarkdownWrapper>
-                    <h1>ReadMe:</h1>
-
-                    <ReactMarkdown
-                    >{readMeInMarkdown}</ReactMarkdown>
-
-                    </MarkdownWrapper>
-                  </Showing>
+                  <DetailedView username={username} result={result} />
                 </>
               ) : (
                 <NotShowing>should'nt see</NotShowing>

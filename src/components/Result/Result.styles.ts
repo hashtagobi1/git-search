@@ -71,13 +71,3 @@ overflow: auto;
 
 
 `
-
-export const MarkdownWrapper = styled.div`
-
-/* display:grid; */
-width:100vw;
-/* flex-direction:column; */
-/* justify-content:center; */
-/* align-items:center; */
-/* background:red; */
-`

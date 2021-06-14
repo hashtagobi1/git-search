@@ -21,7 +21,7 @@ Project Description
 - [ ] make details page pretty  
 - [ ] testing [shallow renders]  
 - [ ] create folder for mock ups  
-- [ ] add insstructions + process  
+- [ ] add insstructions + process on readme  
 - [ ] make detailed component pretty  
 - [ ] clean up all folders + REMOVE ANY word  
 - [ ] framer motion [loading, animate on exit, animation on detailed view)  
