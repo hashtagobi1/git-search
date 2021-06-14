@@ -24,10 +24,10 @@ Please choose to view via the online/offline versions
 
 ## Mock up designs 🎨
 
-![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/Home.png")
-![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/Search_Results.png)
-![alt text]("https://github.com/hashtagobi1/git-search/blob/new_branch/src/mockups/detail_page.png")
 
+![Home](https://user-images.githubusercontent.com/79381017/121890589-6d318780-cd12-11eb-915b-9e9f9678e914.png)
+![Search_Results](https://user-images.githubusercontent.com/79381017/121890590-6d318780-cd12-11eb-8a82-1fe9ed0ccae4.png)
+![detail_page](https://user-images.githubusercontent.com/79381017/121890582-6c005a80-cd12-11eb-81ad-fbf81f19ae2d.png)
 
 
 
