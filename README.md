@@ -24,9 +24,16 @@ Please choose to view via the online/offline versions
 
 ## Mock up designs 🎨
 
-
+### Home Page
 ![Home](https://user-images.githubusercontent.com/79381017/121890589-6d318780-cd12-11eb-915b-9e9f9678e914.png)
+
+### Search Results
+
 ![Search_Results](https://user-images.githubusercontent.com/79381017/121890590-6d318780-cd12-11eb-8a82-1fe9ed0ccae4.png)
+
+
+### Detail Page
+
 ![detail_page](https://user-images.githubusercontent.com/79381017/121890582-6c005a80-cd12-11eb-81ad-fbf81f19ae2d.png)
 
 
