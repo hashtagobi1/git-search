@@ -5,7 +5,7 @@ const initState = {
   input: "",
 };
 
-const inputReducer = (state: any = initState, action: Action) => {
+const inputReducer = (state: typeof initState = initState, action: Action) => {
   switch (action.type) {
     case ActionType.SET_INPUT:
       return { ...state, input: action.payload };

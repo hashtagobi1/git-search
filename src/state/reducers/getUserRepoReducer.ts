@@ -5,6 +5,7 @@ const initState = {
   repoEndpoint: "",
   loading: false,
   errorState: false,
+  
 };
 
 const getUserRepoReducer = (
@@ -18,7 +19,6 @@ const getUserRepoReducer = (
         loading: true,
       };
     case ActionType.GET_USER_REPO_SUCCESS:
-      // console.log(action.repoEndpoint);
 
       return {
         ...state,

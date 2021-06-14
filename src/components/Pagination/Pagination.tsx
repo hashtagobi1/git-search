@@ -40,9 +40,7 @@ const Pagination = ({
   const extraPages: number = useSelector(
     (state: State) => state.fetchRepoReducer.pagesShownAmount[1]
   );
-  const modalState: boolean = useSelector(
-    (state: State) => state.showModalReducer.showModal
-  );
+
   const text: string = useSelector((state: State) => state.inputReducer.input);
 
   const checkPage = () => {
@@ -74,6 +72,7 @@ const Pagination = ({
     <PaginationWrapper>
       <PaginContainer>
         <PaginationEl>
+          {/* Show first page in pagination */}
           <PaginationEl.First
             activeLabel=""
             onClick={() => {
@@ -83,9 +82,11 @@ const Pagination = ({
             }}
           />
           <PaginationEl.Prev onClick={prevPage} />
-          {/* Filling in the pages */}
 
           <Gap>&nbsp;</Gap>
+
+          {/* Only show first 15 pages */}
+
           {totalPages.map((page: undefined, arrayIndex: number) => {
             if (arrayIndex === 0) {
               return;
@@ -94,7 +95,6 @@ const Pagination = ({
                 <PaginationEl.Item
                   onClick={() => {
                     showModal(false);
-
                     fetchRepos(text, arrayIndex, perPage);
                   }}
                   key={arrayIndex}
@@ -105,14 +105,11 @@ const Pagination = ({
                   {arrayIndex}
                 </PaginationEl.Item>
               );
-            } else if (arrayIndex > 20) {
-              return;
             }
           })}
 
+          {/* Show the remaining pages in a drop down */}
           {totalPages.length > extraPages && (
-            // <PaginationEl.Ellipsis activeLabel="stuff" />
-
             <DropdownEl>
               <DropdownEl.Toggle as={ButtonStyles}>...More</DropdownEl.Toggle>
               <DropdownEl.Menu>
@@ -141,7 +138,7 @@ const Pagination = ({
             </DropdownEl>
           )}
 
-          {/* Last Item */}
+          {/* Last Page */}
           <PaginationEl.Item
             active={pageNumber === totalPages.length}
             activeLabel=""

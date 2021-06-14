@@ -6,6 +6,7 @@ Project Description
 
 ### Todo
 
+- [ ]   
 - [ ] rename some variablees: totalCount == repositoriesAmount  
 - [ ] write up documentation + instructions  
 - [ ] search commits. code, language, etc:https://docs.github.com/en/rest/reference/search  
@@ -17,19 +18,19 @@ Project Description
 
 ### In Progress
 
+- [ ] clean up all folders + REMOVE ANY word  
 - [ ] upload 10:30  
-- [ ] make details page pretty  
 - [ ] testing [shallow renders]  
 - [ ] create folder for mock ups  
 - [ ] add insstructions + process on readme  
 - [ ] make detailed component pretty  
-- [ ] clean up all folders + REMOVE ANY word  
 - [ ] framer motion [loading, animate on exit, animation on detailed view)  
 - [ ] API TOEKN INCREASE  
 
 ### Done ✓
 
 - [x] create details page  
+- [x] make details page pretty  
 - [x] make pagination pretty!  
 - [x] add links to n pages  
 - [x] popup view Details  

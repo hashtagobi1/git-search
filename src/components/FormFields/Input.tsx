@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   SearchBoxForm,
   SubmitButton,
@@ -16,6 +16,8 @@ import { actionCreators, State } from "../../state";
 import { ButtonStyles } from "../Buttons/Button.styles";
 
 const Input = () => {
+  // State
+
   const dispatch = useDispatch();
   const { setInput, fetchRepos, showModal } = bindActionCreators(
     actionCreators,
@@ -29,29 +31,23 @@ const Input = () => {
   const resultsPerPage = useSelector(
     (state: State) => state.fetchRepoReducer.resultsPerPage
   );
-  const modalState: boolean = useSelector(
-    (state: State) => state.showModalReducer.showModal
-  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLButtonElement>) => {
-    showModal(false)
-
+    showModal(false);
     e.preventDefault();
     fetchRepos(text, pageNumber, perPage);
   };
 
   const searchClick = () => {
-    showModal(false)
-
+    showModal(false);
     fetchRepos(text, pageNumber, perPage);
-
-    // console.log("hey");
   };
   const handleKeyDown = (e: any) => {
-    showModal(false)
+    showModal(false);
     if (e.code === "Enter") {
       fetchRepos(text, pageNumber, 10);
     }
@@ -72,7 +68,6 @@ const Input = () => {
         </SearchBoxForm.Group>
         <InputGroupBox>
           <DropdownEl>
-            {/* <SearchBoxForm.Label >Results Per Page:</SearchBoxForm.Label> */}
             <DropdownEl.Toggle as={ButtonStyles}>
               Results per Page: {perPage}
             </DropdownEl.Toggle>
@@ -83,7 +78,6 @@ const Input = () => {
                     key={perPageAmount}
                     onClick={() => {
                       showModal(false);
-
                       fetchRepos(text, pageNumber, perPageAmount);
                     }}
                   >

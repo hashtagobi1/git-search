@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import Input from "../FormFields/Input";
 import {
   SearchWrapper,
@@ -6,15 +5,18 @@ import {
   LightParagraph,
   ResultDetails,
   SpinnerLoad,
+  SpinnerWrapper,
 } from "./SearchArea.styles";
 
 // State Management
 import { useSelector } from "react-redux";
 import { State } from "../../state";
+// Components
 import ResultCardComponent from "../Result/ResultCardComponent";
 import Pagination from "../Pagination/Pagination";
 
 const SearchArea = () => {
+  // States
   const totalCount: number = useSelector(
     (state: State) => state.fetchRepoReducer.items[1]
   );
@@ -37,39 +39,31 @@ const SearchArea = () => {
     (state: State) => state.fetchRepoReducer.pageNumber
   );
   const perPage = useSelector((state: State) => state.fetchRepoReducer.perPage);
-  const totalPages = useSelector(
-    (state: State) => state.fetchRepoReducer.totalPages
-  );
+
   const modalState: boolean = useSelector(
     (state: State) => state.showModalReducer.showModal
   );
   const input = useSelector((state: State) => state.inputReducer.input);
 
   const displayResults = (): string => {
+    // Calculation to display the current amount of results on screen
     let resultsLeft = 0;
     let resultsRight = 0;
-
     let hold = pageNumber - 1;
-
     resultsLeft = hold * perPage;
-
     if (hold === 0) {
       resultsLeft = 1;
     }
     resultsRight = perPage * pageNumber;
-
     if (resultsRight > totalCount) {
       resultsRight = totalCount;
     }
-
     if (results.length === 1) {
       return `Showing results:  ${totalCount} of ${totalCount}`;
     }
-
     if (totalCount === 0) {
-      return "FRAMER MOTIONNNNNN";
+      return "";
     }
-
     return `Showing results: ${resultsLeft} - ${resultsRight}`;
   };
   const renderPagination = () => {
@@ -88,19 +82,24 @@ const SearchArea = () => {
     if (loadingState === true) {
       return (
         <SearchWrapper>
-          <SpinnerLoad
-            variant="success"
-            animation="border"
-            role="status"
-          ></SpinnerLoad>
-          <h1>Loading... Framer Motion</h1>
+          <SpinnerWrapper>
+            <h1>Loading...</h1>
+            <SpinnerLoad
+              variant="success"
+              animation="border"
+              role="status"
+            ></SpinnerLoad>
+          </SpinnerWrapper>
         </SearchWrapper>
       );
     } else if (errorState) {
       return (
         <div>
           <DarkParagraph>{errorMessage}</DarkParagraph>
-          <h1>Display framer motion error here for empty shit</h1>
+          <SpinnerWrapper>
+            <h1>hold on...</h1>
+            <SpinnerLoad  animation="grow" role="status" variant="danger" />
+          </SpinnerWrapper>
         </div>
       );
     } else {
@@ -115,14 +114,17 @@ const SearchArea = () => {
           <DarkParagraph>
             Showing {totalCount} available repository results
           </DarkParagraph>
-
-         {!modalState && <LightParagraph> {displayResults()}</LightParagraph>}
+          {!modalState && <LightParagraph> {displayResults()}</LightParagraph>}
         </ResultDetails>
       )}
       {responseMessage && (
         <>
           <DarkParagraph>{responseMessage}</DarkParagraph>
           <LightParagraph>"{input}"</LightParagraph>
+          <SpinnerWrapper>
+            <h1>search something else instead...</h1>
+            <SpinnerLoad  animation="grow" role="status" variant="primary" />
+          </SpinnerWrapper>
         </>
       )}
       {!modalState && renderPagination()}

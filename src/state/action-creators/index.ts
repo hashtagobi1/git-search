@@ -2,14 +2,7 @@ import { ActionType } from "../action-types";
 import { Dispatch } from "redux";
 import { Action } from "../actions/index";
 import axios from "axios";
-import { SearchResponseData } from "../../API/API";
 import { endpoint, headerConfig, headerReadMe } from "../../API/API";
-
-// ! https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc&page=1&per_page=10
-
-// * get page + per page
-//  ? page 1 as default (((onClick then we fetch repo with different number?.....)))
-// ? select 25,50,100 per page
 
 interface fetchReposProps {
   searchTerm: string;
@@ -21,7 +14,9 @@ interface fetchReposProps {
 
 export const fetchRepos =
   (searchTerm: string, pageNumber: number, perPage: number) =>
-  async (dispatch: Dispatch<Action>, getState: any) => {
+  async (dispatch: Dispatch<Action>) => {
+
+    // Error for empty search
     if (!searchTerm) {
       return dispatch({
         type: ActionType.FETCH_REPOS_ERROR,
@@ -31,10 +26,9 @@ export const fetchRepos =
         perPage: 0,
       });
     }
-    // const availablePages
     const newEndpoint = `${endpoint}/search/repositories?q=${searchTerm}&page=${pageNumber}&per_page=${perPage}&sort=stars`;
 
-    // Dispatch First Request
+    // Dispatch First Request 
     dispatch({
       type: ActionType.FETCH_REPOS_REQUEST,
       loading: true,
@@ -47,6 +41,8 @@ export const fetchRepos =
         const amountOfPages = Math.ceil(response.data.total_count / perPage);
 
         if (response.data.total_count === 0) {
+
+          // If there are no repo's with the search term
           return dispatch({
             type: ActionType.FETCH_REPO_SUCCESS,
             total_count: response.data.total_count,
@@ -61,6 +57,8 @@ export const fetchRepos =
             pagesShownAmount: [pageNumber, 15],
           });
         } else if (response) {
+          // Display available repo's
+
           return dispatch({
             type: ActionType.FETCH_REPO_SUCCESS,
             total_count: response.data.total_count,
@@ -91,7 +89,7 @@ export const fetchRepos =
           dispatch({
             type: ActionType.FETCH_REPOS_ERROR,
             errorState: true,
-            errorMessage: `Your API rate limit has probably exceeded. Either wait 60 secs or sign in to increase search limit.`,
+            errorMessage: `Your API rate limit has exceeded. Either wait 60 secs or sign in to increase search limit.`,
             perPage: 0,
             error: error.message,
           });
@@ -111,15 +109,8 @@ export const setInput = (userText: string) => {
 export const getReadMe =
   (user: string, repoName: string) =>
   async (dispatch: Dispatch<Action>, getState: any) => {
-    // console.log(user);
-    // console.log(repoName);
-    // ! parameters: reponame -> from results.name
-    // ! parameters: owner -> from results.fullname
     const newEndpoint = `${endpoint}/repos/${user}/${repoName}/readme`;
-
-    // ! GET /repos/{owner}/{repo}/readme
-
-    // * add middle ware
+    console.log("readMe  has been dispatched");
 
     // Dispatch First Request
     dispatch({
@@ -131,7 +122,10 @@ export const getReadMe =
     await axios
       .get(newEndpoint, headerReadMe)
       .then((response) => {
-        if (response.data.content === undefined || response.data.content ===null) {
+        if (
+          response.data.content === undefined ||
+          response.data.content === null
+        ) {
           return dispatch({
             type: ActionType.GET_README_SUCCESS,
             readMe: "",
@@ -139,8 +133,6 @@ export const getReadMe =
             errorState: false,
           });
         }
-
-        // console.log(response.data.content)
         dispatch({
           type: ActionType.GET_README_SUCCESS,
           readMe: response.data.content,
@@ -149,11 +141,6 @@ export const getReadMe =
         });
       })
       .catch((error) => {
-        // ! if repo is undefined
-        // if (repoName === null || repoName === undefined) {
-        //   repoName = "";
-        // }
-        // console.log(error);
         dispatch({
           type: ActionType.GET_README_ERROR,
           readMe: "",
@@ -164,37 +151,16 @@ export const getReadMe =
   };
 
 export const showModal = (showing: boolean) => {
-  // const inverted = !showing;
   return (dispatch: Dispatch<Action>) => {
-    // console.log("We are in the thunk: State => : " + showing);
-
     return dispatch({
       type: ActionType.INVERT_MODAL,
       showModal: showing,
     });
-
-    // if (showing === false) {
-    // console.log("False Clause State => : " + showing);
-
-    //   return dispatch({
-    //     type: ActionType.INVERT_MODAL,
-    //     showModal: !showing,
-    //   });
-    // } else if (showing === true) {
-    // console.log("True Clause State => : " + showing);
-
-    //   dispatch({
-    //     type: ActionType.INVERT_MODAL,
-    //     showModal: false,
-    //   });
-
-    // }
   };
 };
 
 export const getUserRepo =
-  (full_name: string) =>
-  async (dispatch: Dispatch<Action>, getState: any) => {
+  (full_name: string) => async (dispatch: Dispatch<Action>, getState: any) => {
     const newEndpoint = `${endpoint}/repos/${full_name}`;
 
     dispatch({
@@ -210,7 +176,6 @@ export const getUserRepo =
           repoEndpoint: newEndpoint,
           loading: false,
           errorState: true,
-          payload: response.data,
         });
       })
       .catch((error) => {

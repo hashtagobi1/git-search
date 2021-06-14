@@ -24,5 +24,13 @@ export const ResultDetails = styled.div`
   align-items: center;
 `;
 
+export const SpinnerWrapper = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
 
-export const SpinnerLoad = styled(Spinner)``
+`
+export const SpinnerLoad = styled(Spinner)`
+margin:10px 10px 10px 10px;
+/* width:10vw; */
+`

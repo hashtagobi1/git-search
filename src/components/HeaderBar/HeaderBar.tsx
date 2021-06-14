@@ -7,9 +7,6 @@ import { HeaderWrapper, HeadingOne, HeadingThree } from "./HeaderBar.styles";
 import { useSelector } from "react-redux";
 import { State } from "../../state";
 
-// ! we need to display new
-// !limits based on akant
-
 const HeaderBar = () => {
   const rateLimit = useSelector(
     (state: State) => state.fetchRepoReducer.rateLimit

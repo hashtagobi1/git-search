@@ -57,7 +57,6 @@ interface GetUserRepo_SUCCESS {
   repoEndpoint: string;
   loading: boolean;
   errorState: boolean;
-  payload:any
 }
 interface GetUserRepo_REQUEST {
   type: ActionType.GET_USER_REPO_REQUEST;

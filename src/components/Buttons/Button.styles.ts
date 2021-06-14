@@ -5,15 +5,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 export const ButtonStyles = styled(Button)`
   text-align: center;
   outline: none !important;
-  /* ${({ background }) => (background ? "#000" : "#66c6cc")} */
-
   background: #66c6cc;
   color: black;
   margin: 10px 10px;
   cursor: pointer;
   :hover {
     background: #014e53;
-
     outline: none !important;
     box-shadow: none;
   }
@@ -40,7 +37,5 @@ export const ButtonStyles = styled(Button)`
 `;
 
 export const DropdownEl = styled(Dropdown)`
-  /* background: #66c6cc; */
-
-  color:black;
+  color: black;
 `;

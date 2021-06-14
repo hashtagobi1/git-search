@@ -2,14 +2,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { MyButton } from "../HeaderBar/HeaderBar.styles";
 
 const LoggedComp = () => {
-  const {
-    loginWithPopup,
-    isAuthenticated,
-    logout,
-    isLoading,
-    user,
-    getIdTokenClaims,
-  } = useAuth0();
+  const { loginWithPopup, isAuthenticated, logout, isLoading, user } =
+    useAuth0();
 
   if (isLoading)
     return <MyButton background="background">Signing in...</MyButton>;
@@ -20,15 +14,12 @@ const LoggedComp = () => {
         <MyButton
           onClick={() => {
             loginWithPopup();
-            // ! callback is needed to manage state
-            // callback();
           }}
         >
           Sign In
         </MyButton>
       ) : (
         isAuthenticated && (
-          // isLogged &&
           <>
             {user && (
               <>
@@ -39,7 +30,6 @@ const LoggedComp = () => {
             <MyButton
               onClick={() => {
                 logout();
-                // callback();
               }}
             >
               Log out
